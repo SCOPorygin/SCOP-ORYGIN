@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentions légales & RGPD — SCOP ORYGIN</title>
+<style>
+/* ═══ TOKENS ═══ */
+:root {
+  --rouge:   #E63027;
+  --jaune:   #F5C400;
+  --bleu:    #0076BE;
+  --vert:    #2E8B4A;
+  --navy:    #0D1B2A;
+  --gris:    #F0F2F5;
+  --blanc:   #FFFFFF;
+  --texte:   #1A2530;
+  --subtil:  #6B7685;
+  --radius:  18px;
+  --gap:     clamp(16px, 3vw, 32px);
+  --pad:     clamp(20px, 5vw, 80px);
+}
+
+/* ═══ RESET ═══ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--texte);
+  background: var(--blanc);
+  overflow-x: hidden;
+}
+img { max-width:100%; height:auto; display:block; }
+a { color:inherit; text-decoration:none; }
+
+/* ═══ STRIPE ═══ */
+.stripe { height:4px; display:flex; }
+.stripe span { flex:1; }
+
+
+
+/* ═══ ÉLÉMENTS GRAPHIQUES DÉCORATIFS ═══ */
+.deco {
+  position:absolute; pointer-events:none; z-index:0;
+  opacity:0.12; transition:opacity .4s;
+}
+.deco img { width:100%; height:auto; }
+.deco-r { right:-60px; }
+.deco-l { left:-60px; }
+@media(max-width:768px) {
+  .deco { opacity:0.07; }
+  .deco-r { right:-40px; }
+  .deco-l { left:-40px; }
+}
+
+/* ═══ HEADER (fond blanc) ═══ */
+header {
+  position:sticky; top:0; z-index:200;
+  background:var(--blanc);
+  border-bottom:1px solid rgba(0,0,0,0.08);
+  padding:14px var(--pad);
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px;
+}
+.header-logo img {
+  height:56px; width:auto;
+}
+nav {
+  display:flex; gap:22px; align-items:center; flex-wrap:wrap;
+}
+nav a {
+  font-size:14px; font-weight:600;
+  color:var(--navy); opacity:0.7;
+  transition:opacity .2s, color .2s;
+}
+nav a:hover { opacity:1; color:var(--bleu); }
+.btn-nav {
+  background:var(--rouge); color:var(--blanc);
+  padding:10px 22px; border-radius:50px;
+  font-size:14px; font-weight:700;
+  box-shadow:0 3px 12px rgba(230,48,39,0.35);
+  transition:transform .2s, box-shadow .2s;
+  white-space:nowrap;
+}
+.btn-nav:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(230,48,39,0.45); }
+
+/* ═══ HERO ═══ */
+.hero {
+  position:relative; min-height:90vh;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:80px var(--pad) 60px;
+  overflow:hidden;
+}
+.hero-bg {
+  position:absolute; inset:0;
+  background:url('assets/hero-bg.jpg') center/cover no-repeat;
+  filter:brightness(0.3);
+  z-index:0;
+}
+.hero-grid-veil {
+  position:absolute; inset:0; z-index:1;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px);
+  background-size:52px 52px;
+}
+.hero-content { position:relative; z-index:2; max-width:680px; }
+.hero-pre {
+  display:inline-flex; align-items:center; gap:10px;
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.18);
+  color:rgba(255,255,255,0.9);
+  font-size:10px; font-weight:700; letter-spacing:1px;
+  padding:5px 14px; border-radius:50px;
+  margin-bottom:16px;
+}
+.hero-pre .dot {
+  width:7px; height:7px; border-radius:50%; background:var(--vert);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.5)} }
+.hero h1 {
+  font-size:clamp(26px,3.8vw,44px);
+  font-weight:900; line-height:1.06;
+  color:var(--blanc); letter-spacing:-1px;
+  margin-bottom:8px;
+}
+.hero-tagline {
+  font-size:clamp(12px,1.5vw,14px);
+  color:rgba(255,255,255,0.6);
+  font-style:italic; letter-spacing:.2px;
+  margin-bottom:16px;
+}
+.hero-sub {
+  font-size:clamp(13px,1.6vw,15px);
+  line-height:1.65; color:rgba(255,255,255,0.72);
+  max-width:520px; margin-bottom:22px;
+}
+.hero-sub strong { color:var(--blanc); }
+.hero-ctas { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:52px; }
+.btn-primary {
+  background:var(--rouge); color:var(--blanc);
+  padding:11px 24px; border-radius:50px;
+  font-weight:700; font-size:13.5px;
+  box-shadow:0 6px 20px rgba(230,48,39,0.45);
+  transition:transform .2s;
+  display:inline-block;
+}
+.btn-primary:hover { transform:translateY(-2px); }
+.btn-outline {
+  background:transparent; color:var(--blanc);
+  padding:11px 24px; border-radius:50px;
+  font-weight:600; font-size:13.5px; display:inline-block;
+  border:1.5px solid rgba(255,255,255,0.3);
+  transition:border-color .2s;
+}
+.btn-outline:hover { border-color:var(--blanc); }
+
+/* Stats hero */
+.hero-stats { display:flex; gap:36px; flex-wrap:wrap; margin-bottom:40px; }
+.hero-stats .stat .n { font-size:28px; font-weight:900; color:var(--blanc); }
+.hero-stats .stat .n em { font-style:normal; color:var(--jaune); }
+.hero-stats .stat .l { font-size:12px; color:rgba(255,255,255,.5); margin-top:3px; line-height:1.4; }
+
+/* Chips INSEE */
+.hero-chips { display:flex; gap:12px; flex-wrap:wrap; position:relative; z-index:2; padding-bottom:60px; }
+.chip {
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(6px);
+  border-radius:14px; padding:12px 16px;
+  display:flex; align-items:center; gap:10px;
+}
+.chip .cn { font-size:22px; font-weight:900; color:var(--rouge); }
+.chip .cl { font-size:11.5px; color:rgba(255,255,255,.6); line-height:1.4; }
+.chip.good .cn { color:var(--vert); }
+
+/* ═══ SECTION BASE ═══ */
+section { padding:96px var(--pad); position:relative; }
+.section-inner { position:relative; z-index:1; }
+
+/* ═══ CONSTAT ═══ */
+.constat { background:var(--navy); overflow:hidden; }
+.constat-cols { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+.constat-col { border-radius:var(--radius); padding:36px; }
+.constat-col.pb { background:rgba(230,48,39,0.08); border:1px solid rgba(230,48,39,0.18); }
+.constat-col.sol { background:rgba(46,139,74,0.1); border:1px solid rgba(46,139,74,0.2); }
+.col-tag {
+  display:inline-block; font-size:10.5px; font-weight:800;
+  letter-spacing:1px; padding:4px 12px; border-radius:50px;
+  margin-bottom:18px;
+}
+.pb .col-tag { background:rgba(230,48,39,0.2); color:var(--rouge); }
+.sol .col-tag { background:rgba(46,139,74,0.2); color:#4cc970; }
+.constat-col h3 { font-size:20px; font-weight:900; color:var(--blanc); margin-bottom:18px; line-height:1.3; }
+.constat-items { display:flex; flex-direction:column; gap:10px; }
+.ci { display:flex; gap:10px; align-items:flex-start; font-size:14px; color:rgba(255,255,255,.7); line-height:1.6; }
+.ci-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; margin-top:7px; }
+.pb .ci-dot { background:var(--rouge); }
+.sol .ci-dot { background:var(--vert); }
+.constat-quote {
+  margin-top:22px; padding:14px 16px;
+  background:rgba(255,255,255,0.06); border-radius:10px;
+  font-size:13px; font-style:italic; color:rgba(255,255,255,.8); line-height:1.6;
+}
+
+/* ═══ CONCEPT ═══ */
+.concept { background:var(--blanc); }
+.concept-embleme-wrap {
+  display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+}
+.embleme-side { text-align:center; }
+.embleme-img {
+  width:280px; height:auto; margin:0 auto 24px;
+  animation:float 6s ease-in-out infinite;
+  filter:drop-shadow(0 20px 40px rgba(230,48,39,0.15));
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+.embleme-caption { font-size:13px; color:var(--subtil); font-style:italic; line-height:1.6; }
+.concept-text {}
+.ey { font-size:11.5px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:var(--rouge); margin-bottom:14px; display:block; }
+h2.sh { font-size:clamp(26px,4vw,40px); font-weight:900; line-height:1.1; margin-bottom:14px; letter-spacing:-.4px; }
+p.sp { font-size:16px; line-height:1.75; color:var(--subtil); max-width:560px; margin-bottom:32px; }
+.concept-story { font-size:15px; line-height:1.85; color:var(--texte); }
+.concept-story p { margin-bottom:14px; }
+.concept-story em { color:var(--bleu); font-style:normal; font-weight:600; }
+
+/* Valeurs */
+.values-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:36px; }
+.val {
+  padding:16px; border-radius:14px;
+  background:var(--gris); display:flex; gap:12px; align-items:flex-start;
+  border-left:3px solid transparent; transition:transform .2s;
+}
+.val:hover { transform:translateX(4px); }
+.val.c1{border-color:var(--rouge);} .val.c2{border-color:var(--bleu);}
+.val.c3{border-color:var(--vert);} .val.c4{border-color:var(--jaune);}
+.val img { width:42px; height:42px; object-fit:contain; flex-shrink:0; }
+.val h4 { font-size:13.5px; font-weight:700; margin-bottom:3px; }
+.val p { font-size:12px; color:var(--subtil); line-height:1.5; }
+
+/* ═══ SCOP block (on avance ensemble) ═══ */
+.scop-block {
+  background:var(--navy); border-radius:22px; padding:44px;
+  position:relative; overflow:hidden; margin-top:48px;
+}
+.scop-block::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--rouge),var(--jaune),var(--bleu),var(--vert));
+}
+.scop-block .scop-tag {
+  display:inline-block; background:var(--jaune); color:var(--navy);
+  font-size:11px; font-weight:800; padding:4px 14px; border-radius:50px;
+  margin-bottom:16px; position:relative;
+}
+.scop-block h3 { color:var(--blanc); font-size:22px; font-weight:900; margin-bottom:12px; }
+.scop-block p { color:rgba(255,255,255,.75); font-size:15px; line-height:1.8; }
+
+/* ═══ 3 PÔLES ═══ */
+.poles { background:var(--gris); overflow:hidden; }
+.poles-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.pole-card {
+  background:var(--blanc); border-radius:20px; padding:32px 26px;
+  position:relative; overflow:hidden;
+  box-shadow:0 2px 16px rgba(0,0,0,0.05);
+  border-top:4px solid transparent;
+  transition:transform .3s, box-shadow .3s;
+}
+.pole-card:hover { transform:translateY(-6px); box-shadow:0 14px 36px rgba(0,0,0,0.1); }
+.pole-card.p1{border-top-color:var(--bleu);}
+.pole-card.p2{border-top-color:var(--rouge);}
+.pole-card.p3{border-top-color:var(--vert);}
+.pole-icon { width:56px; height:56px; border-radius:14px; display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+.pole-icon img { width:48px; height:48px; object-fit:contain; }
+.pole-card h3 { font-size:18px; font-weight:900; margin-bottom:10px; }
+.pole-card p { font-size:13.5px; color:var(--subtil); line-height:1.7; margin-bottom:14px; }
+.pole-tags { display:flex; flex-wrap:wrap; gap:6px; }
+.ptag { font-size:11px; font-weight:700; padding:4px 10px; border-radius:50px; }
+.p1 .ptag{background:rgba(0,118,190,.1);color:var(--bleu);}
+.p2 .ptag{background:rgba(230,48,39,.1);color:var(--rouge);}
+.p3 .ptag{background:rgba(46,139,74,.1);color:var(--vert);}
+
+/* ═══ MODULE PARCOURS INTERACTIF ═══ */
+.parcours-section { background:var(--blanc); overflow:hidden; }
+#parcours-module {
+  background:var(--navy); border-radius:22px; padding:44px;
+  position:relative; overflow:hidden;
+}
+#parcours-module::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--rouge),var(--jaune),var(--bleu),var(--vert));
+}
+/* Breadcrumb */
+#parcours-breadcrumb {
+  font-size:12px; color:rgba(255,255,255,.45);
+  margin-bottom:28px; min-height:20px;
+  letter-spacing:.3px;
+}
+#parcours-breadcrumb span { color:rgba(255,255,255,.8); }
+/* Step */
+.p-step { display:none; }
+.p-step.active { display:block; animation:fadeIn .35s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+.p-title {
+  font-size:clamp(20px,3vw,26px); font-weight:900;
+  color:var(--blanc); margin-bottom:8px;
+}
+.p-sub { font-size:14px; color:rgba(255,255,255,.6); margin-bottom:28px; line-height:1.6; }
+/* Boutons de choix */
+.p-choices { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:24px; }
+.p-btn {
+  padding:13px 22px; border-radius:50px; border:none; cursor:pointer;
+  font-size:14px; font-weight:700; font-family:inherit;
+  transition:transform .2s, box-shadow .2s;
+}
+.p-btn:hover { transform:translateY(-2px); }
+.p-btn.rouge{background:var(--rouge);color:var(--blanc);}
+.p-btn.bleu{background:var(--bleu);color:var(--blanc);}
+.p-btn.vert{background:var(--vert);color:var(--blanc);}
+.p-btn.jaune{background:var(--jaune);color:var(--navy);}
+.p-btn.gris{background:rgba(255,255,255,0.1);color:var(--blanc);border:1px solid rgba(255,255,255,0.2);}
+/* Étapes parcours */
+.p-steps-list { display:flex; flex-direction:column; gap:0; margin:20px 0; }
+.p-step-item {
+  display:flex; gap:16px; align-items:flex-start;
+  padding:16px 0; border-bottom:1px solid rgba(255,255,255,.07);
+}
+.p-step-item:last-child { border-bottom:none; }
+.p-step-num {
+  width:32px; height:32px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:800; color:var(--navy);
+}
+.p-step-item h4 { font-size:15px; font-weight:700; color:var(--blanc); margin-bottom:4px; }
+.p-step-item p { font-size:13px; color:rgba(255,255,255,.6); line-height:1.6; }
+/* Passerelles */
+.p-passerelle {
+  background:rgba(245,196,0,0.1); border:1px solid rgba(245,196,0,0.25);
+  border-radius:14px; padding:18px; margin-top:20px;
+}
+.p-passerelle h4 { color:var(--jaune); font-size:14px; font-weight:700; margin-bottom:8px; }
+.p-passerelle p { color:rgba(255,255,255,.7); font-size:13px; line-height:1.6; }
+/* Sorties */
+.p-exit {
+  background:rgba(46,139,74,0.1); border:1px solid rgba(46,139,74,0.25);
+  border-radius:14px; padding:16px; margin-top:12px;
+}
+.p-exit h4 { color:#4cc970; font-size:14px; font-weight:700; margin-bottom:6px; }
+.p-exit p { color:rgba(255,255,255,.65); font-size:13px; line-height:1.6; }
+/* Nav */
+.p-nav { display:flex; gap:12px; flex-wrap:wrap; margin-top:24px; }
+.p-nav-btn {
+  background:rgba(255,255,255,0.08); color:rgba(255,255,255,.75);
+  border:1px solid rgba(255,255,255,0.15); padding:9px 18px;
+  border-radius:50px; font-size:13px; font-weight:600;
+  cursor:pointer; font-family:inherit; transition:background .2s;
+}
+.p-nav-btn:hover { background:rgba(255,255,255,0.16); }
+/* Message final CTA */
+.p-cta {
+  text-align:center; padding:28px; background:rgba(255,255,255,0.05);
+  border-radius:14px; margin-top:20px;
+}
+.p-cta h4 { color:var(--blanc); font-size:18px; font-weight:700; margin-bottom:10px; }
+.p-cta p { color:rgba(255,255,255,.6); font-size:14px; margin-bottom:18px; }
+
+/* ═══ PÔLE FORMATION ═══ */
+.formation-section { background:var(--gris); overflow:hidden; }
+.form-cats { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+.form-cat {
+  background:var(--blanc); border-radius:18px; padding:28px;
+  border-top:3px solid var(--rouge);
+}
+.form-cat h4 { font-size:16px; font-weight:700; margin-bottom:14px; }
+.form-cat ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
+.form-cat li {
+  font-size:13.5px; color:var(--subtil); padding:8px 0;
+  border-bottom:1px solid rgba(0,0,0,0.06); display:flex; align-items:center; gap:8px; line-height:1.4;
+}
+.form-cat li:last-child { border-bottom:none; }
+.form-cat li::before { content:''; width:5px; height:5px; border-radius:50%; flex-shrink:0; }
+.form-cat.rouge li::before{background:var(--rouge);}
+.form-cat.bleu li::before{background:var(--bleu);}
+.form-cat.vert li::before{background:var(--vert);}
+.form-cat.jaune li::before{background:var(--jaune);}
+.form-cat.rouge{border-top-color:var(--rouge);}
+.form-cat.bleu{border-top-color:var(--bleu);}
+.form-cat.vert{border-top-color:var(--vert);}
+.form-cat.jaune{border-top-color:var(--jaune);}
+
+/* ═══ BOUTIQUE À L'ESSAI ═══ */
+.boutique { background:var(--blanc); overflow:hidden; }
+.boutique-callout {
+  background:rgba(245,196,0,0.07); border:1px solid rgba(245,196,0,0.22);
+  border-radius:20px; padding:40px;
+}
+.boutique-callout h3 { font-size:22px; font-weight:900; color:var(--navy); margin-bottom:10px; }
+.boutique-callout > p { font-size:15px; line-height:1.75; color:var(--subtil); margin-bottom:28px; }
+.boutique-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.bs { background:var(--blanc); border-radius:14px; padding:18px; }
+.bs-n { font-size:10.5px; font-weight:800; color:var(--jaune); letter-spacing:1px; margin-bottom:6px; }
+.bs p { font-size:13px; color:var(--subtil); line-height:1.5; }
+
+/* ═══ ORYGIN BATI ═══ */
+.bati-section { background:var(--gris); overflow:hidden; }
+.bati-card {
+  background:var(--blanc); border-radius:22px; padding:44px;
+  display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;
+}
+.bati-logo { margin-bottom:20px; }
+.bati-logo img { height:48px; }
+.bati-card h3 { font-size:24px; font-weight:900; margin-bottom:14px; }
+.bati-card p { font-size:15px; color:var(--subtil); line-height:1.8; margin-bottom:16px; }
+.bati-arrow {
+  display:inline-flex; align-items:center; gap:12px;
+  font-size:14px; font-weight:700; color:var(--vert);
+  padding:14px 24px; background:rgba(46,139,74,0.08);
+  border:1px solid rgba(46,139,74,0.2); border-radius:50px;
+}
+.bati-visual {
+  display:flex; flex-direction:column; gap:10px;
+}
+.bati-step {
+  background:var(--gris); border-radius:12px; padding:16px;
+  display:flex; gap:12px; align-items:center;
+}
+.bati-step .bsi-num {
+  width:30px; height:30px; border-radius:50%; background:var(--vert);
+  color:var(--blanc); display:flex; align-items:center; justify-content:center;
+  font-size:13px; font-weight:800; flex-shrink:0;
+}
+.bati-step p { font-size:13.5px; color:var(--texte); font-weight:600; }
+
+/* ═══ ÉQUIPE ═══ */
+.team { background:var(--blanc); overflow:hidden; }
+.profiles { display:flex; flex-direction:column; gap:36px; }
+.profile {
+  display:grid; grid-template-columns:280px 1fr; gap:40px;
+  background:var(--gris); border-radius:20px; padding:36px;
+  align-items:start;
+}
+.profile:nth-child(even) { grid-template-columns:1fr 280px; }
+.profile:nth-child(even) .prof-left { order:2; }
+.profile:nth-child(even) .prof-right { order:1; }
+.prof-photo {
+  width:100%; aspect-ratio:1/1; object-fit:cover;
+  object-position:top; border-radius:16px; display:block;
+}
+.prof-accent { height:3px; border-radius:2px; margin-bottom:14px; }
+.prof-name { font-size:20px; font-weight:900; color:var(--navy); margin-bottom:4px; }
+.prof-accroche { font-size:14px; color:var(--subtil); margin-bottom:18px; line-height:1.5; }
+.prof-skills { display:flex; flex-direction:column; gap:8px; margin-bottom:18px; }
+.prof-skill { display:flex; gap:10px; }
+.pnum {
+  width:24px; height:24px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:10px; font-weight:800; color:var(--blanc); margin-top:1px;
+}
+.prof-skill h5 { font-size:13px; font-weight:700; margin-bottom:2px; }
+.prof-skill p { font-size:12px; color:var(--subtil); line-height:1.5; }
+.prof-quote {
+  display:flex; gap:10px; background:var(--blanc); border-radius:12px;
+  padding:14px; margin-bottom:14px;
+}
+.prof-quote img { width:28px; height:28px; object-fit:contain; flex-shrink:0; opacity:.7; }
+.prof-quote p { font-size:13px; color:var(--texte); font-style:italic; line-height:1.65; }
+.prof-count {
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--blanc); border-radius:50px; padding:7px 16px;
+}
+.prof-count .n { font-size:16px; font-weight:900; }
+.prof-count .l { font-size:11.5px; color:var(--subtil); }
+
+/* ═══ SITES ═══ */
+.sites { background:var(--gris); overflow:hidden; }
+.sites-grid { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+.site-card {
+  border-radius:20px; min-height:360px; padding:32px;
+  position:relative; overflow:hidden;
+  display:flex; flex-direction:column; justify-content:flex-end;
+}
+.site-bg {
+  position:absolute; inset:0;
+  background-size:cover; background-position:center;
+  filter:brightness(.38); z-index:0;
+}
+.site-content { position:relative; z-index:1; }
+.site-pill {
+  display:inline-block; font-size:11px; font-weight:800;
+  letter-spacing:.5px; padding:5px 13px; border-radius:50px;
+  margin-bottom:14px; width:fit-content;
+}
+.site-card.cayenne .site-pill { background:rgba(0,118,190,.3); color:var(--blanc); border:1px solid rgba(0,118,190,.4); }
+.site-card.remire .site-pill { background:var(--jaune); color:var(--navy); }
+.site-card h3 { color:var(--blanc); font-size:22px; font-weight:900; margin-bottom:8px; }
+.site-card p { color:rgba(255,255,255,.85); font-size:13.5px; line-height:1.6; max-width:360px; }
+.site-addr { margin-top:14px; padding-top:14px; border-top:1px solid rgba(255,255,255,.18); }
+.site-addr p { color:rgba(255,255,255,.9); font-size:13px; line-height:1.65; }
+.sites-teaser { margin-top:22px; padding:18px 24px; border-radius:14px; background:var(--blanc); display:flex; align-items:center; gap:12px; }
+.sites-teaser p { font-size:14px; color:var(--subtil); }
+
+/* ═══ TIMELINE ═══ */
+.tl-section { background:var(--navy); overflow:hidden; }
+.tl-section h2.sh { color:var(--blanc); }
+.tl-section .sp { color:rgba(255,255,255,.6); }
+.timeline { display:flex; position:relative; margin-bottom:32px; }
+.timeline::before {
+  content:''; position:absolute; top:25px; left:26px; right:26px;
+  height:2px; background:rgba(255,255,255,.08);
+}
+.tl-item { flex:1; padding:0 10px; }
+.tl-dot {
+  width:50px; height:50px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:17px; margin-bottom:14px; position:relative; z-index:1;
+  border:2px solid;
+}
+.tl-item.done .tl-dot { border-color:var(--vert); background:rgba(46,139,74,.15); }
+.tl-item.now  .tl-dot { border-color:var(--jaune); background:rgba(245,196,0,.15); animation:glow 2s infinite; }
+.tl-item.next .tl-dot { border-color:rgba(255,255,255,.15); background:rgba(255,255,255,.04); }
+@keyframes glow { 0%,100%{box-shadow:0 0 0 0 rgba(245,196,0,.3)} 50%{box-shadow:0 0 0 8px rgba(245,196,0,0)} }
+.tl-s { font-size:9.5px; font-weight:800; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; }
+.tl-item.done .tl-s{color:var(--vert);} .tl-item.now .tl-s{color:var(--jaune);} .tl-item.next .tl-s{color:rgba(255,255,255,.3);}
+.tl-item h4 { color:var(--blanc); font-size:13.5px; font-weight:700; margin-bottom:5px; }
+.tl-item p { color:rgba(255,255,255,.45); font-size:12px; line-height:1.6; }
+.tl-box { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07); border-radius:16px; padding:26px 30px; }
+.tl-box h4 { color:var(--blanc); font-size:15px; font-weight:700; margin-bottom:16px; }
+.sl { display:flex; flex-direction:column; gap:9px; }
+.si { display:flex; align-items:center; gap:10px; font-size:13.5px; }
+.si.done{color:rgba(255,255,255,.82);} .si.now{color:var(--jaune);} .si.next{color:rgba(255,255,255,.35);}
+.sd { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+.si.done .sd{background:var(--vert);} .si.now .sd{background:var(--jaune);} .si.next .sd{background:rgba(255,255,255,.2);}
+
+/* ═══ CONTACT ═══ */
+.contact-section { background:var(--blanc); overflow:hidden; }
+.contact-grid { display:grid; grid-template-columns:1fr 1.4fr; gap:52px; align-items:start; }
+.c-info h3 { font-size:20px; font-weight:900; margin-bottom:24px; }
+.c-items { display:flex; flex-direction:column; gap:16px; }
+.c-item { display:flex; align-items:center; gap:14px; }
+.c-item img { width:44px; height:44px; object-fit:contain; flex-shrink:0; }
+.c-item div span { display:block; font-size:11px; font-weight:700; letter-spacing:.7px; text-transform:uppercase; color:var(--subtil); margin-bottom:3px; }
+.c-item div p { font-size:14px; line-height:1.6; }
+.c-form { background:var(--gris); border-radius:22px; padding:34px; }
+.c-form h3 { font-size:20px; font-weight:900; margin-bottom:24px; }
+.frow { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.fg { margin-bottom:14px; }
+.fg label { display:block; font-size:11.5px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; color:var(--subtil); margin-bottom:7px; }
+.fg input, .fg select, .fg textarea {
+  width:100%; background:var(--blanc); border:1px solid rgba(0,0,0,0.1);
+  color:var(--texte); border-radius:11px; padding:12px 15px;
+  font-size:13.5px; font-family:inherit; transition:border-color .2s; outline:none;
+}
+.fg input:focus, .fg select:focus, .fg textarea:focus { border-color:var(--rouge); }
+.fg textarea { resize:vertical; min-height:100px; }
+.btn-form {
+  width:100%; background:var(--rouge); color:var(--blanc);
+  padding:15px; border-radius:50px; font-weight:700; font-size:15px;
+  border:none; cursor:pointer; box-shadow:0 5px 16px rgba(230,48,39,.38);
+  transition:transform .2s; margin-top:4px; font-family:inherit;
+}
+.btn-form:hover { transform:translateY(-2px); }
+
+/* ═══ FOOTER ═══ */
+footer { background:var(--navy); padding:48px var(--pad) 22px; }
+.footer-inner { display:grid; grid-template-columns:1.6fr 1fr 1fr; gap:44px; margin-bottom:34px; }
+.footer-logos { display:flex; align-items:center; gap:16px; margin-bottom:14px; flex-wrap:wrap; }
+.footer-logos img.fl { height:36px; }
+.footer-div { width:1px; height:26px; background:rgba(255,255,255,.15); }
+.footer-tag { font-size:13px; color:rgba(255,255,255,.45); line-height:1.7; max-width:250px; margin-bottom:8px; }
+footer h5 { color:var(--blanc); font-size:13.5px; font-weight:700; margin-bottom:14px; }
+footer a, footer .fl-t {
+  color:rgba(255,255,255,.5); text-decoration:none;
+  display:block; font-size:13px; margin-bottom:8px; line-height:1.6;
+}
+footer a:hover { color:var(--jaune); }
+.footer-bottom {
+  border-top:1px solid rgba(255,255,255,.07); padding-top:18px;
+  display:flex; justify-content:space-between;
+  font-size:11.5px; color:rgba(255,255,255,.28); flex-wrap:wrap; gap:8px;
+}
+
+/* ═══ REVEAL ANIMATIONS ═══ */
+.reveal { opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity:1; transform:none; }
+.s1{transition-delay:.07s;} .s2{transition-delay:.14s;} .s3{transition-delay:.21s;} .s4{transition-delay:.28s;}
+
+/* ═══ RESPONSIVE ═══ */
+
+@media(prefers-reduced-motion: reduce) {
+  .embleme-img { animation:none; }
+  .reveal { opacity:1; transform:none; transition:none; }
+}
+
+@keyframes fadeUp   { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:none} }
+@keyframes fadeLeft { from{opacity:0;transform:translateX(-28px)} to{opacity:1;transform:none} }
+@keyframes fadeRight{ from{opacity:0;transform:translateX(28px)} to{opacity:1;transform:none} }
+@keyframes scaleIn  { from{opacity:0;transform:scale(.92)} to{opacity:1;transform:scale(1)} }
+.anim-up    { opacity:0; }
+.anim-left  { opacity:0; }
+.anim-right { opacity:0; }
+.anim-scale { opacity:0; }
+.anim-up.in    { animation:fadeUp    .65s cubic-bezier(.2,.8,.2,1) forwards; }
+.anim-left.in  { animation:fadeLeft  .65s cubic-bezier(.2,.8,.2,1) forwards; }
+.anim-right.in { animation:fadeRight .65s cubic-bezier(.2,.8,.2,1) forwards; }
+.anim-scale.in { animation:scaleIn   .55s cubic-bezier(.2,.8,.2,1) forwards; }
+.d1{animation-delay:.08s!important} .d2{animation-delay:.16s!important}
+.d3{animation-delay:.24s!important} .d4{animation-delay:.32s!important}
+.card-hover { transition:transform .28s ease, box-shadow .28s ease; }
+.card-hover:hover { transform:translateY(-6px); box-shadow:0 16px 40px rgba(0,0,0,.12)!important; }
+
+/* ── ANIMATIONS PROFESSIONNELLES ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeLeft {
+  from { opacity:0; transform:translateX(-20px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+@keyframes fadeRight {
+  from { opacity:0; transform:translateX(20px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+@keyframes scaleIn {
+  from { opacity:0; transform:scale(0.95); }
+  to   { opacity:1; transform:scale(1); }
+}
+.rev    { opacity:0; }
+.rev.in { animation:fadeUp   .6s cubic-bezier(.25,.8,.25,1) forwards; }
+.rev-l  { opacity:0; }
+.rev-l.in { animation:fadeLeft .6s cubic-bezier(.25,.8,.25,1) forwards; }
+.rev-r  { opacity:0; }
+.rev-r.in { animation:fadeRight .6s cubic-bezier(.25,.8,.25,1) forwards; }
+.rev-s  { opacity:0; }
+.rev-s.in { animation:scaleIn .5s cubic-bezier(.25,.8,.25,1) forwards; }
+.d1 { animation-delay:.10s!important; }
+.d2 { animation-delay:.20s!important; }
+.d3 { animation-delay:.30s!important; }
+.d4 { animation-delay:.40s!important; }
+.d5 { animation-delay:.50s!important; }
+/* Hover carte — subtil */
+.card-lift {
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.card-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 36px rgba(0,0,0,.10) !important;
+}
+
+/* ═══ RESPONSIVE MOBILE — ajouts ═══ */
+.burger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:6px; background:none; border:none; z-index:300; }
+.burger span { display:block; width:24px; height:2px; background:var(--navy); border-radius:2px; transition:transform .3s, opacity .3s; }
+.burger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity:0; }
+.burger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+nav.open { display:flex !important; }
+
+@media(max-width:900px){
+  .burger { display:flex; }
+  nav {
+    display:none;
+    position:fixed; top:0; left:0; right:0; bottom:0;
+    background:var(--blanc);
+    flex-direction:column;
+    align-items:center; justify-content:center;
+    gap:28px;
+    z-index:250;
+  }
+  nav a { font-size:20px; opacity:1; }
+  .btn-nav { font-size:16px; padding:14px 32px; }
+  .hero { min-height:auto; padding:100px 18px 50px; }
+  .hero-content { max-width:100%; }
+  h1 { font-size:clamp(24px,7vw,40px) !important; }
+  .hero-pre { font-size:9px; }
+  .hero-stats { gap:12px; flex-wrap:wrap; }
+  .hero-chips { flex-wrap:wrap; gap:10px; }
+  .chip { min-width:140px; }
+  .section-inner { padding:0 !important; }
+  h2 { font-size:clamp(20px,5vw,32px) !important; }
+  .footer-inner { grid-template-columns:1fr !important; gap:24px; }
+  .values-grid, .val-grid { grid-template-columns:1fr !important; }
+  .sites-grid { grid-template-columns:1fr !important; }
+  .site-card { min-height:280px; }
+  .poles-grid { grid-template-columns:1fr !important; }
+  .contact-grid { grid-template-columns:1fr !important; }
+  .form-cats { grid-template-columns:1fr 1fr !important; }
+  .profiles { gap:32px; }
+  .profile, .profile:nth-child(even) { grid-template-columns:1fr !important; }
+  .prof-photo { max-width:200px; margin:0 auto 16px; }
+  .frow, .form-grid { grid-template-columns:1fr !important; }
+  .formation-card { padding:20px; }
+  .edpg-hero-grid { grid-template-columns:1fr !important; }
+  .passeports-grid { grid-template-columns:1fr !important; }
+  .modules-grid { grid-template-columns:1fr !important; }
+  .parcours-header { grid-template-columns:1fr !important; }
+  .phase-item { grid-template-columns:1fr !important; }
+  .for-who { grid-template-columns:1fr !important; }
+  .suivi-steps { flex-direction:column; gap:16px; }
+  .p-step { padding:20px 16px; }
+  table { font-size:13px; }
+  .chip { padding:12px 14px; }
+  .stat .n { font-size:clamp(22px,6vw,36px); }
+  .constat-cols { grid-template-columns:1fr !important; }
+  .concept-embleme-wrap { grid-template-columns:1fr !important; }
+  .bati-card { grid-template-columns:1fr !important; }
+  .boutique-steps { grid-template-columns:1fr !important; }
+  .timeline { flex-direction:column; gap:16px; }
+  .timeline::before { display:none; }
+  .embleme-img { width:160px !important; }
+  .btn-primary, .btn-outline, .btn-nav { white-space:normal; text-align:center; }
+  img { height:auto; }
+}
+
+@media(max-width:480px){
+  section { padding:40px 14px !important; }
+  header { padding:10px 14px; }
+  .header-logo img { height:44px; }
+  h1 { font-size:clamp(22px,8vw,32px) !important; }
+  h2 { font-size:clamp(18px,6vw,26px) !important; }
+  .form-cats { grid-template-columns:1fr !important; }
+  .boutique-steps { grid-template-columns:1fr !important; }
+  .hero-stats { flex-direction:column; gap:8px; }
+  .stat { text-align:center; }
+  .val { padding:16px !important; }
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="stripe"><span style="background:var(--rouge)"></span><span style="background:var(--jaune)"></span><span style="background:var(--bleu)"></span><span style="background:var(--vert)"></span></div>
+<header>
+  <div class="header-logo">
+    <a href="index.html"><img src="assets/logo-header.png" alt="SCOP ORYGIN"></a>
+  </div>
+  <nav><a href="index.html">Accueil</a><a href="concept.html">Qui sommes&#8209;nous&nbsp;?</a><a href="poles.html">Nos pôles</a><a href="parcours.html">Nos parcours</a><a href="formation.html">Formations</a><a href="edpg.html">EDPG</a><a href="sites.html">Nos sites</a><a href="contact.html">Contact</a></nav>
+  <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <a href="contact.html" class="btn-nav">Nous contacter</a>
+</header>
+<style>
+.legal-nav { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:40px; }
+.legal-nav a { padding:10px 18px; background:var(--gris); border-radius:50px; font-size:13.5px; font-weight:600; color:var(--navy); text-decoration:none; transition:background .2s; }
+.legal-nav a:hover { background:rgba(230,48,39,.08); color:var(--rouge); }
+.legal-section { margin-bottom:64px; }
+.legal-section h2 { font-size:26px; font-weight:900; color:var(--navy); margin-bottom:8px; padding-top:60px; border-top:2px solid var(--gris); }
+.legal-section h3 { font-size:17px; font-weight:700; color:var(--navy); margin:24px 0 10px; }
+.legal-section p { font-size:14.5px; line-height:1.85; color:var(--texte); margin-bottom:12px; }
+.legal-section ul { margin:10px 0 14px 20px; }
+.legal-section li { font-size:14.5px; line-height:1.8; color:var(--texte); margin-bottom:4px; }
+.dpo-card { background:var(--gris); border-radius:14px; padding:22px 24px; margin:18px 0; border-left:4px solid var(--bleu); }
+.dpo-card p { margin-bottom:4px; font-size:14px; }
+.cookie-table { width:100%; border-collapse:collapse; margin:16px 0; }
+.cookie-table th { background:var(--navy); color:white; padding:12px 16px; text-align:left; font-size:13px; }
+.cookie-table td { padding:11px 16px; font-size:13.5px; border-bottom:1px solid rgba(0,0,0,.05); }
+</style>
+<section style="background:var(--gris);padding:60px var(--pad) 40px;">
+  <div style="max-width:900px;margin:0 auto;">
+    <span class="ey anim-up">Informations légales</span>
+    <h1 class="sh anim-up d1">Mentions légales, CGU,<br>Politique RGPD & Cookies</h1>
+    <p class="sp anim-up d2">Document mis à jour le 17 septembre 2026. En naviguant sur ce site, vous acceptez les conditions décrites ci-dessous.</p>
+    <div class="legal-nav">
+      <a href="#mentions">Mentions légales</a>
+      <a href="#cgu">Conditions générales d'utilisation</a>
+      <a href="#rgpd">Politique de confidentialité RGPD</a>
+      <a href="#cookies">Gestion des cookies</a>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--blanc);padding:40px var(--pad) 80px;">
+  <div style="max-width:900px;margin:0 auto;">
+
+    <!-- MENTIONS LÉGALES -->
+    <div class="legal-section" id="mentions">
+      <h2>Mentions légales</h2>
+      <h3>Editeur du site</h3>
+      <p><strong>Dénomination sociale :</strong> SCOP ORYGIN<br>
+      <strong>Forme juridique :</strong> Société Coopérative et Participative (SCOP SARL)<br>
+      <strong>SIREN :</strong> 101 927 366 000 19<br>
+      <strong>Siège social :</strong> 1 avenue Gustave Charlery, Buro Club — 97300 Cayenne, Guyane française<br>
+      <strong>Téléphone :</strong> 05 94 27 40 40<br>
+      <strong>Email :</strong> contact@scop-orygin.com<br>
+      <strong>Site web :</strong> www.scop-orygin.com</p>
+      <h3>Direction de la publication</h3>
+      <p>La directrice de la publication est <strong>Alexandra Guevara</strong>, représentante légale de SCOP ORYGIN.</p>
+      <h3>Hébergement</h3>
+      <p>Le site est hébergé par un prestataire dont les coordonnées sont disponibles sur demande à contact@scop-orygin.com.</p>
+      <h3>Propriété intellectuelle</h3>
+      <p>L'ensemble des contenus présents sur ce site (textes, images, logos, graphismes, structure) sont la propriété exclusive de SCOP ORYGIN ou de ses partenaires et sont protégés par le droit de la propriété intellectuelle. Toute reproduction, représentation, modification, publication ou adaptation, totale ou partielle, est interdite sans autorisation préalable écrite de SCOP ORYGIN.</p>
+      <p>Les marques DOUVAN, LIBRE, BATI, KANBWA, ANKRE, EDPG et tous leurs dérivés sont des marques propriétaires de SCOP ORYGIN.</p>
+    </div>
+
+    <!-- CGU -->
+    <div class="legal-section" id="cgu">
+      <h2>Conditions générales d'utilisation</h2>
+      <h3>Acceptation des conditions</h3>
+      <p>L'accès au site www.scop-orygin.com et à ses sous-pages implique l'acceptation pleine et entière des présentes conditions générales d'utilisation. SCOP ORYGIN se réserve le droit de les modifier à tout moment. Les modifications prennent effet dès leur publication sur le site.</p>
+      <h3>Accès au site</h3>
+      <p>Le site est accessible librement à tout utilisateur disposant d'un accès à Internet. SCOP ORYGIN met en oeuvre tous les moyens raisonnables pour garantir la disponibilité du site, mais ne peut être tenu responsable des interruptions liées à des opérations de maintenance, des pannes techniques ou des cas de force majeure.</p>
+      <h3>Utilisation du site</h3>
+      <p>L'utilisateur s'engage à utiliser le site dans le respect des lois et règlements en vigueur. Il est notamment interdit de :</p>
+      <ul>
+        <li>Utiliser le site à des fins illicites, commerciales non autorisées ou frauduleuses ;</li>
+        <li>Reproduire, copier ou exploiter sans autorisation tout contenu du site ;</li>
+        <li>Tenter d'accéder à des zones restreintes du site ;</li>
+        <li>Transmettre des contenus malveillants ou des données non sollicitées.</li>
+      </ul>
+      <h3>Responsabilité</h3>
+      <p>Les informations publiées sur ce site ont un caractère général et informatif. Elles ne constituent pas un conseil juridique, fiscal ou professionnel. SCOP ORYGIN décline toute responsabilité pour les dommages directs ou indirects résultant de l'utilisation des informations contenues sur le site.</p>
+      <p>Les formations et parcours présentés sont susceptibles d'évoluer. Les modalités, tarifs et dates sont fournis à titre indicatif et peuvent être modifiés sans préavis.</p>
+      <h3>Liens hypertextes</h3>
+      <p>Le site peut contenir des liens vers des sites tiers. SCOP ORYGIN n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu ou leur fonctionnement.</p>
+      <h3>Droit applicable</h3>
+      <p>Les présentes CGU sont soumises au droit français. En cas de litige, les tribunaux compétents du ressort de la Cour d'appel de Cayenne seront seuls compétents.</p>
+    </div>
+
+    <!-- RGPD -->
+    <div class="legal-section" id="rgpd">
+      <h2>Politique de confidentialité — RGPD</h2>
+      <h3>Responsable du traitement</h3>
+      <p>SCOP ORYGIN est responsable des traitements de données personnelles effectués dans le cadre de son activité.</p>
+
+      <h3>Délégué à la Protection des Données (DPO)</h3>
+      <div class="dpo-card">
+        <p><strong>Madame Alexandra Guevara</strong></p>
+        <p>Désignation CNIL n° DPO-167139 — prise d'effet le 24 octobre 2025</p>
+        <p>Email : direction@ingelog.net</p>
+        <p>Adresse : 1810 bis Route de Montjoly — 97354 Rémire-Montjoly, Guyane</p>
+        <p style="margin-top:8px;font-size:13px;color:var(--subtil);">Pour toute question relative à vos données personnelles ou pour exercer vos droits, vous pouvez contacter le DPO aux coordonnées ci-dessus ou à l'adresse postale de SCOP ORYGIN.</p>
+      </div>
+
+      <h3>Données collectées</h3>
+      <p>SCOP ORYGIN collecte des données personnelles dans les situations suivantes :</p>
+      <ul>
+        <li><strong>Formulaire de contact et d'inscription :</strong> nom, prénom, adresse email, numéro de téléphone, profil et nature de la demande.</li>
+        <li><strong>Navigation sur le site :</strong> données de connexion, adresse IP, pages visitées (via cookies — voir la section Cookies).</li>
+      </ul>
+
+      <h3>Finalités des traitements</h3>
+      <ul>
+        <li>Traitement et suivi des demandes d'inscription et de contact ;</li>
+        <li>Orientation et accompagnement des bénéficiaires vers les parcours adaptés ;</li>
+        <li>Communication d'informations sur les formations et événements ORYGIN ;</li>
+        <li>Amélioration de l'expérience de navigation (données anonymisées).</li>
+      </ul>
+
+      <h3>Base légale</h3>
+      <p>Les traitements sont fondés sur :</p>
+      <ul>
+        <li>L'intérêt légitime de SCOP ORYGIN à traiter les demandes qui lui sont adressées ;</li>
+        <li>Le consentement de l'utilisateur pour les communications commerciales et les cookies non essentiels ;</li>
+        <li>L'exécution d'un contrat ou de mesures précontractuelles pour les bénéficiaires inscrits à un parcours ou une formation.</li>
+      </ul>
+
+      <h3>Durée de conservation</h3>
+      <p>Les données de contact sont conservées pendant une durée maximale de 3 ans à compter du dernier contact. Les données relatives aux bénéficiaires inscrits sont conservées conformément aux obligations légales applicables à la formation professionnelle.</p>
+
+      <h3>Vos droits</h3>
+      <p>Conformément au Règlement (UE) 2016/679 (RGPD) et à la loi Informatique et Libertés, vous disposez des droits suivants :</p>
+      <ul>
+        <li><strong>Droit d'accès :</strong> obtenir confirmation du traitement de vos données et en recevoir une copie ;</li>
+        <li><strong>Droit de rectification :</strong> corriger des données inexactes ou incomplètes ;</li>
+        <li><strong>Droit à l'effacement :</strong> demander la suppression de vos données dans les conditions prévues par le RGPD ;</li>
+        <li><strong>Droit d'opposition :</strong> vous opposer au traitement pour des raisons tenant à votre situation particulière ;</li>
+        <li><strong>Droit à la portabilité :</strong> recevoir vos données dans un format structuré et lisible par machine ;</li>
+        <li><strong>Droit de limitation :</strong> demander la limitation du traitement dans certains cas.</li>
+      </ul>
+      <p>Pour exercer ces droits, contactez le DPO aux coordonnées indiquées ci-dessus. En cas de réponse insatisfaisante, vous pouvez introduire une réclamation auprès de la CNIL (www.cnil.fr).</p>
+
+      <h3>Transferts hors UE</h3>
+      <p>SCOP ORYGIN ne procède à aucun transfert de données personnelles en dehors de l'Union Européenne sans garanties appropriées.</p>
+    </div>
+
+    <!-- COOKIES -->
+    <div class="legal-section" id="cookies">
+      <h2>Gestion des cookies</h2>
+      <h3>Qu'est-ce qu'un cookie ?</h3>
+      <p>Un cookie est un petit fichier texte déposé sur votre terminal (ordinateur, smartphone, tablette) lors de la visite d'un site web. Il permet au site de mémoriser des informations relatives à votre navigation.</p>
+
+      <h3>Cookies utilisés sur ce site</h3>
+      <table class="cookie-table">
+        <thead><tr><th>Categorie</th><th>Finalité</th><th>Durée</th><th>Consentement requis</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Cookies essentiels</strong></td><td>Bon fonctionnement du site, mémorisation de vos préférences de navigation et du consentement aux cookies</td><td>Session ou 13 mois</td><td>Non</td></tr>
+          <tr><td><strong>Cookies analytiques</strong></td><td>Mesure d'audience anonymisée — nombre de visites, pages consultées, durée</td><td>13 mois</td><td>Oui</td></tr>
+          <tr><td><strong>Cookies fonctionnels</strong></td><td>Mémorisation de vos préférences d'affichage</td><td>13 mois</td><td>Oui</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Gestion de vos préférences</h3>
+      <p>Lors de votre première visite sur le site, un bandeau d'information vous permet d'accepter ou de refuser les cookies non essentiels. Vous pouvez modifier vos préférences à tout moment :</p>
+      <ul>
+        <li><strong>Depuis votre navigateur :</strong> les paramètres de votre navigateur vous permettent de gérer, bloquer ou supprimer les cookies. Consultez l'aide de votre navigateur pour connaître la procédure.</li>
+        <li><strong>Depuis ce site :</strong> en contactant SCOP ORYGIN à contact@scop-orygin.com pour toute demande relative aux cookies.</li>
+      </ul>
+      <p>Le refus des cookies non essentiels n'affecte pas votre accès aux contenus du site. Seules certaines fonctionnalités optionnelles peuvent être impactées.</p>
+
+      <h3>Cookies tiers</h3>
+      <p>Ce site peut intégrer des contenus ou outils tiers (formulaires externes, fonctionnalités interactives). Ces tiers peuvent déposer leurs propres cookies, soumis à leurs propres politiques de confidentialité. SCOP ORYGIN ne contrôle pas ces cookies et vous invite à consulter les politiques de confidentialité des tiers concernés.</p>
+    </div>
+
+    <div style="background:var(--gris);border-radius:14px;padding:22px;margin-top:40px;">
+      <p style="font-size:13px;color:var(--subtil);margin:0;">Ce document a été rédigé conformément au Règlement (UE) 2016/679 relatif à la protection des données (RGPD) et à la loi n°78-17 du 6 janvier 1978 modifiée. Dernière mise à jour : septembre 2026.</p>
+    </div>
+
+  </div>
+</section>
+<footer>
+  <div class="footer-inner" style="grid-template-columns:1.4fr 1fr 1fr auto;align-items:start;">
+    <div>
+      <p style="font-size:16px;font-weight:900;color:var(--blanc);margin-bottom:10px;">SCOP ORYGIN</p>
+      <p class="footer-tag">SCOP guyanaise dédiée au développement économique par l'insertion, l'accompagnement et la formation.</p>
+      <p style="font-size:11px;color:rgba(255,255,255,.25);margin-top:6px;">SIREN 101 927 366 000 19</p>
+    </div>
+    <div>
+      <h5>Navigation</h5>
+      <a href="index.html">Accueil</a>
+      <a href="concept.html">Qui sommes&#8209;nous&nbsp;?</a>
+      <a href="poles.html">Nos pôles</a>
+      <a href="parcours.html">Nos parcours</a>
+      <a href="formation.html">Formations</a>
+      <a href="edpg.html">EDPG</a>
+      
+      <a href="sites.html">Nos sites</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div>
+      <h5>Contact</h5>
+      <span class="fl-t">1 avenue Gustave Charlery</span>
+      <span class="fl-t">Buro Club — 97300 Cayenne</span>
+      <span class="fl-t">05 94 27 40 40</span>
+      <a href="mailto:contact@scop-orygin.com">contact@scop-orygin.com</a>
+      <a href="https://www.scop-orygin.com" target="_blank">www.scop-orygin.com</a>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+      <h5 style="text-align:center;">Membre</h5>
+      <img src="assets/logo-ess.png" alt="Marque ESS" style="width:70px;height:auto;">
+      <p style="font-size:9px;color:rgba(255,255,255,.3);text-align:center;line-height:1.4;">Economie Sociale<br>& Solidaire</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 SCOP ORYGIN — orygin kampus</span>
+    <div style="display:flex;gap:16px;">
+      <a href="legal.html" style="color:rgba(255,255,255,.35)">Mentions légales</a>
+      <a href="legal.html#cgu" style="color:rgba(255,255,255,.35)">CGU</a>
+      <a href="legal.html#rgpd" style="color:rgba(255,255,255,.35)">Politique RGPD</a>
+      <a href="legal.html#cookies" style="color:rgba(255,255,255,.35)">Cookies</a>
+    </div>
+  </div>
+</footer>
+<div class="stripe"><span style="background:var(--rouge)"></span><span style="background:var(--jaune)"></span><span style="background:var(--bleu)"></span><span style="background:var(--vert)"></span></div>
+<script>
+/* ─── MODULE PARCOURS ─── */
+const history = [];
+
+function goStep(stepId, label) {
+  // Hide all
+  document.querySelectorAll('.p-step').forEach(s => s.classList.remove('active'));
+  // Show target
+  const target = document.getElementById(stepId);
+  if (target) target.classList.add('active');
+  // Update history
+  if (stepId === 'step-0') {
+    history.length = 0;
+  } else if (label) {
+    history.push(label);
+  }
+  // Update breadcrumb
+  const bc = document.getElementById('parcours-breadcrumb');
+  if (history.length === 0) {
+    bc.innerHTML = '';
+  } else {
+    bc.innerHTML = 'Guichet unique  ' +
+      history.map((l,i) => i === history.length-1
+        ? `<span>${l}</span>` : l
+      ).join('  ');
+  }
+}
+
+/* ─── REVEAL AU SCROLL ─── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+
+
+(function(){
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+  }, {threshold:0.1});
+  document.querySelectorAll('.anim-up,.anim-left,.anim-right,.anim-scale,.reveal').forEach(el=>obs.observe(el));
+})();
+
+/* ── SCROLL OBSERVER ── */
+(function(){
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.rev,.rev-l,.rev-r,.rev-s,.reveal').forEach(el => io.observe(el));
+})();
+
+</script>
+
+<script>
+(function(){
+  var btn = document.getElementById('burger');
+  var nav = document.querySelector('nav');
+  if(!btn || !nav) return;
+  btn.addEventListener('click', function(){
+    btn.classList.toggle('open');
+    nav.classList.toggle('open');
+    document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
+  });
+  nav.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      btn.classList.remove('open');
+      nav.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+})();
+</script>
+</body>
+</html>

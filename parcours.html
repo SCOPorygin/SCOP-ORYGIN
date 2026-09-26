@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nos parcours — SCOP ORYGIN</title>
+<style>
+/* ═══ TOKENS ═══ */
+:root {
+  --rouge:   #E63027;
+  --jaune:   #F5C400;
+  --bleu:    #0076BE;
+  --vert:    #2E8B4A;
+  --navy:    #0D1B2A;
+  --gris:    #F0F2F5;
+  --blanc:   #FFFFFF;
+  --texte:   #1A2530;
+  --subtil:  #6B7685;
+  --radius:  18px;
+  --gap:     clamp(16px, 3vw, 32px);
+  --pad:     clamp(20px, 5vw, 80px);
+}
+
+/* ═══ RESET ═══ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--texte);
+  background: var(--blanc);
+  overflow-x: hidden;
+}
+img { max-width:100%; height:auto; display:block; }
+a { color:inherit; text-decoration:none; }
+
+/* ═══ STRIPE ═══ */
+.stripe { height:4px; display:flex; }
+.stripe span { flex:1; }
+
+
+
+/* ═══ ÉLÉMENTS GRAPHIQUES DÉCORATIFS ═══ */
+.deco {
+  position:absolute; pointer-events:none; z-index:0;
+  opacity:0.12; transition:opacity .4s;
+}
+.deco img { width:100%; height:auto; }
+.deco-r { right:-60px; }
+.deco-l { left:-60px; }
+@media(max-width:768px) {
+  .deco { opacity:0.07; }
+  .deco-r { right:-40px; }
+  .deco-l { left:-40px; }
+}
+
+/* ═══ HEADER (fond blanc) ═══ */
+header {
+  position:sticky; top:0; z-index:200;
+  background:var(--blanc);
+  border-bottom:1px solid rgba(0,0,0,0.08);
+  padding:14px var(--pad);
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px;
+}
+.header-logo img {
+  height:56px; width:auto;
+}
+nav {
+  display:flex; gap:22px; align-items:center; flex-wrap:wrap;
+}
+nav a {
+  font-size:14px; font-weight:600;
+  color:var(--navy); opacity:0.7;
+  transition:opacity .2s, color .2s;
+}
+nav a:hover { opacity:1; color:var(--bleu); }
+.btn-nav {
+  background:var(--rouge); color:var(--blanc);
+  padding:10px 22px; border-radius:50px;
+  font-size:14px; font-weight:700;
+  box-shadow:0 3px 12px rgba(230,48,39,0.35);
+  transition:transform .2s, box-shadow .2s;
+  white-space:nowrap;
+}
+.btn-nav:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(230,48,39,0.45); }
+
+/* ═══ HERO ═══ */
+.hero {
+  position:relative; min-height:90vh;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:80px var(--pad) 60px;
+  overflow:hidden;
+}
+.hero-bg {
+  position:absolute; inset:0;
+  background:url('assets/hero-bg.jpg') center/cover no-repeat;
+  filter:brightness(0.3);
+  z-index:0;
+}
+.hero-grid-veil {
+  position:absolute; inset:0; z-index:1;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px);
+  background-size:52px 52px;
+}
+.hero-content { position:relative; z-index:2; max-width:680px; }
+.hero-pre {
+  display:inline-flex; align-items:center; gap:10px;
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.18);
+  color:rgba(255,255,255,0.9);
+  font-size:10px; font-weight:700; letter-spacing:1px;
+  padding:5px 14px; border-radius:50px;
+  margin-bottom:16px;
+}
+.hero-pre .dot {
+  width:7px; height:7px; border-radius:50%; background:var(--vert);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.5)} }
+.hero h1 {
+  font-size:clamp(26px,3.8vw,44px);
+  font-weight:900; line-height:1.06;
+  color:var(--blanc); letter-spacing:-1px;
+  margin-bottom:8px;
+}
+.hero-tagline {
+  font-size:clamp(12px,1.5vw,14px);
+  color:rgba(255,255,255,0.6);
+  font-style:italic; letter-spacing:.2px;
+  margin-bottom:16px;
+}
+.hero-sub {
+  font-size:clamp(13px,1.6vw,15px);
+  line-height:1.65; color:rgba(255,255,255,0.72);
+  max-width:520px; margin-bottom:22px;
+}
+.hero-sub strong { color:var(--blanc); }
+.hero-ctas { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:52px; }
+.btn-primary {
+  background:var(--rouge); color:var(--blanc);
+  padding:11px 24px; border-radius:50px;
+  font-weight:700; font-size:13.5px;
+  box-shadow:0 6px 20px rgba(230,48,39,0.45);
+  transition:transform .2s;
+  display:inline-block;
+}
+.btn-primary:hover { transform:translateY(-2px); }
+.btn-outline {
+  background:transparent; color:var(--blanc);
+  padding:11px 24px; border-radius:50px;
+  font-weight:600; font-size:13.5px; display:inline-block;
+  border:1.5px solid rgba(255,255,255,0.3);
+  transition:border-color .2s;
+}
+.btn-outline:hover { border-color:var(--blanc); }
+
+/* Stats hero */
+.hero-stats { display:flex; gap:36px; flex-wrap:wrap; margin-bottom:40px; }
+.hero-stats .stat .n { font-size:28px; font-weight:900; color:var(--blanc); }
+.hero-stats .stat .n em { font-style:normal; color:var(--jaune); }
+.hero-stats .stat .l { font-size:12px; color:rgba(255,255,255,.5); margin-top:3px; line-height:1.4; }
+
+/* Chips INSEE */
+.hero-chips { display:flex; gap:12px; flex-wrap:wrap; position:relative; z-index:2; padding-bottom:60px; }
+.chip {
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(6px);
+  border-radius:14px; padding:12px 16px;
+  display:flex; align-items:center; gap:10px;
+}
+.chip .cn { font-size:22px; font-weight:900; color:var(--rouge); }
+.chip .cl { font-size:11.5px; color:rgba(255,255,255,.6); line-height:1.4; }
+.chip.good .cn { color:var(--vert); }
+
+/* ═══ SECTION BASE ═══ */
+section { padding:96px var(--pad); position:relative; }
+.section-inner { position:relative; z-index:1; }
+
+/* ═══ CONSTAT ═══ */
+.constat { background:var(--navy); overflow:hidden; }
+.constat-cols { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+.constat-col { border-radius:var(--radius); padding:36px; }
+.constat-col.pb { background:rgba(230,48,39,0.08); border:1px solid rgba(230,48,39,0.18); }
+.constat-col.sol { background:rgba(46,139,74,0.1); border:1px solid rgba(46,139,74,0.2); }
+.col-tag {
+  display:inline-block; font-size:10.5px; font-weight:800;
+  letter-spacing:1px; padding:4px 12px; border-radius:50px;
+  margin-bottom:18px;
+}
+.pb .col-tag { background:rgba(230,48,39,0.2); color:var(--rouge); }
+.sol .col-tag { background:rgba(46,139,74,0.2); color:#4cc970; }
+.constat-col h3 { font-size:20px; font-weight:900; color:var(--blanc); margin-bottom:18px; line-height:1.3; }
+.constat-items { display:flex; flex-direction:column; gap:10px; }
+.ci { display:flex; gap:10px; align-items:flex-start; font-size:14px; color:rgba(255,255,255,.7); line-height:1.6; }
+.ci-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; margin-top:7px; }
+.pb .ci-dot { background:var(--rouge); }
+.sol .ci-dot { background:var(--vert); }
+.constat-quote {
+  margin-top:22px; padding:14px 16px;
+  background:rgba(255,255,255,0.06); border-radius:10px;
+  font-size:13px; font-style:italic; color:rgba(255,255,255,.8); line-height:1.6;
+}
+
+/* ═══ CONCEPT ═══ */
+.concept { background:var(--blanc); }
+.concept-embleme-wrap {
+  display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+}
+.embleme-side { text-align:center; }
+.embleme-img {
+  width:280px; height:auto; margin:0 auto 24px;
+  animation:float 6s ease-in-out infinite;
+  filter:drop-shadow(0 20px 40px rgba(230,48,39,0.15));
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+.embleme-caption { font-size:13px; color:var(--subtil); font-style:italic; line-height:1.6; }
+.concept-text {}
+.ey { font-size:11.5px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:var(--rouge); margin-bottom:14px; display:block; }
+h2.sh { font-size:clamp(26px,4vw,40px); font-weight:900; line-height:1.1; margin-bottom:14px; letter-spacing:-.4px; }
+p.sp { font-size:16px; line-height:1.75; color:var(--subtil); max-width:560px; margin-bottom:32px; }
+.concept-story { font-size:15px; line-height:1.85; color:var(--texte); }
+.concept-story p { margin-bottom:14px; }
+.concept-story em { color:var(--bleu); font-style:normal; font-weight:600; }
+
+/* Valeurs */
+.values-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:36px; }
+.val {
+  padding:16px; border-radius:14px;
+  background:var(--gris); display:flex; gap:12px; align-items:flex-start;
+  border-left:3px solid transparent; transition:transform .2s;
+}
+.val:hover { transform:translateX(4px); }
+.val.c1{border-color:var(--rouge);} .val.c2{border-color:var(--bleu);}
+.val.c3{border-color:var(--vert);} .val.c4{border-color:var(--jaune);}
+.val img { width:42px; height:42px; object-fit:contain; flex-shrink:0; }
+.val h4 { font-size:13.5px; font-weight:700; margin-bottom:3px; }
+.val p { font-size:12px; color:var(--subtil); line-height:1.5; }
+
+/* ═══ SCOP block (on avance ensemble) ═══ */
+.scop-block {
+  background:var(--navy); border-radius:22px; padding:44px;
+  position:relative; overflow:hidden; margin-top:48px;
+}
+.scop-block::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--rouge),var(--jaune),var(--bleu),var(--vert));
+}
+.scop-block .scop-tag {
+  display:inline-block; background:var(--jaune); color:var(--navy);
+  font-size:11px; font-weight:800; padding:4px 14px; border-radius:50px;
+  margin-bottom:16px; position:relative;
+}
+.scop-block h3 { color:var(--blanc); font-size:22px; font-weight:900; margin-bottom:12px; }
+.scop-block p { color:rgba(255,255,255,.75); font-size:15px; line-height:1.8; }
+
+/* ═══ 3 PÔLES ═══ */
+.poles { background:var(--gris); overflow:hidden; }
+.poles-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.pole-card {
+  background:var(--blanc); border-radius:20px; padding:32px 26px;
+  position:relative; overflow:hidden;
+  box-shadow:0 2px 16px rgba(0,0,0,0.05);
+  border-top:4px solid transparent;
+  transition:transform .3s, box-shadow .3s;
+}
+.pole-card:hover { transform:translateY(-6px); box-shadow:0 14px 36px rgba(0,0,0,0.1); }
+.pole-card.p1{border-top-color:var(--bleu);}
+.pole-card.p2{border-top-color:var(--rouge);}
+.pole-card.p3{border-top-color:var(--vert);}
+.pole-icon { width:56px; height:56px; border-radius:14px; display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+.pole-icon img { width:48px; height:48px; object-fit:contain; }
+.pole-card h3 { font-size:18px; font-weight:900; margin-bottom:10px; }
+.pole-card p { font-size:13.5px; color:var(--subtil); line-height:1.7; margin-bottom:14px; }
+.pole-tags { display:flex; flex-wrap:wrap; gap:6px; }
+.ptag { font-size:11px; font-weight:700; padding:4px 10px; border-radius:50px; }
+.p1 .ptag{background:rgba(0,118,190,.1);color:var(--bleu);}
+.p2 .ptag{background:rgba(230,48,39,.1);color:var(--rouge);}
+.p3 .ptag{background:rgba(46,139,74,.1);color:var(--vert);}
+
+/* ═══ MODULE PARCOURS INTERACTIF ═══ */
+.parcours-section { background:var(--blanc); overflow:hidden; }
+#parcours-module {
+  background:var(--navy); border-radius:22px; padding:44px;
+  position:relative; overflow:hidden;
+}
+#parcours-module::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--rouge),var(--jaune),var(--bleu),var(--vert));
+}
+/* Breadcrumb */
+#parcours-breadcrumb {
+  font-size:12px; color:rgba(255,255,255,.45);
+  margin-bottom:28px; min-height:20px;
+  letter-spacing:.3px;
+}
+#parcours-breadcrumb span { color:rgba(255,255,255,.8); }
+/* Step */
+.p-step { display:none; }
+.p-step.active { display:block; animation:fadeIn .35s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+.p-title {
+  font-size:clamp(20px,3vw,26px); font-weight:900;
+  color:var(--blanc); margin-bottom:8px;
+}
+.p-sub { font-size:14px; color:rgba(255,255,255,.6); margin-bottom:28px; line-height:1.6; }
+/* Boutons de choix */
+.p-choices { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:24px; }
+.p-btn {
+  padding:13px 22px; border-radius:50px; border:none; cursor:pointer;
+  font-size:14px; font-weight:700; font-family:inherit;
+  transition:transform .2s, box-shadow .2s;
+}
+.p-btn:hover { transform:translateY(-2px); }
+.p-btn.rouge{background:var(--rouge);color:var(--blanc);}
+.p-btn.bleu{background:var(--bleu);color:var(--blanc);}
+.p-btn.vert{background:var(--vert);color:var(--blanc);}
+.p-btn.jaune{background:var(--jaune);color:var(--navy);}
+.p-btn.gris{background:rgba(255,255,255,0.1);color:var(--blanc);border:1px solid rgba(255,255,255,0.2);}
+/* Étapes parcours */
+.p-steps-list { display:flex; flex-direction:column; gap:0; margin:20px 0; }
+.p-step-item {
+  display:flex; gap:16px; align-items:flex-start;
+  padding:16px 0; border-bottom:1px solid rgba(255,255,255,.07);
+}
+.p-step-item:last-child { border-bottom:none; }
+.p-step-num {
+  width:32px; height:32px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:800; color:var(--navy);
+}
+.p-step-item h4 { font-size:15px; font-weight:700; color:var(--blanc); margin-bottom:4px; }
+.p-step-item p { font-size:13px; color:rgba(255,255,255,.6); line-height:1.6; }
+/* Passerelles */
+.p-passerelle {
+  background:rgba(245,196,0,0.1); border:1px solid rgba(245,196,0,0.25);
+  border-radius:14px; padding:18px; margin-top:20px;
+}
+.p-passerelle h4 { color:var(--jaune); font-size:14px; font-weight:700; margin-bottom:8px; }
+.p-passerelle p { color:rgba(255,255,255,.7); font-size:13px; line-height:1.6; }
+/* Sorties */
+.p-exit {
+  background:rgba(46,139,74,0.1); border:1px solid rgba(46,139,74,0.25);
+  border-radius:14px; padding:16px; margin-top:12px;
+}
+.p-exit h4 { color:#4cc970; font-size:14px; font-weight:700; margin-bottom:6px; }
+.p-exit p { color:rgba(255,255,255,.65); font-size:13px; line-height:1.6; }
+/* Nav */
+.p-nav { display:flex; gap:12px; flex-wrap:wrap; margin-top:24px; }
+.p-nav-btn {
+  background:rgba(255,255,255,0.08); color:rgba(255,255,255,.75);
+  border:1px solid rgba(255,255,255,0.15); padding:9px 18px;
+  border-radius:50px; font-size:13px; font-weight:600;
+  cursor:pointer; font-family:inherit; transition:background .2s;
+}
+.p-nav-btn:hover { background:rgba(255,255,255,0.16); }
+/* Message final CTA */
+.p-cta {
+  text-align:center; padding:28px; background:rgba(255,255,255,0.05);
+  border-radius:14px; margin-top:20px;
+}
+.p-cta h4 { color:var(--blanc); font-size:18px; font-weight:700; margin-bottom:10px; }
+.p-cta p { color:rgba(255,255,255,.6); font-size:14px; margin-bottom:18px; }
+
+/* ═══ PÔLE FORMATION ═══ */
+.formation-section { background:var(--gris); overflow:hidden; }
+.form-cats { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+.form-cat {
+  background:var(--blanc); border-radius:18px; padding:28px;
+  border-top:3px solid var(--rouge);
+}
+.form-cat h4 { font-size:16px; font-weight:700; margin-bottom:14px; }
+.form-cat ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
+.form-cat li {
+  font-size:13.5px; color:var(--subtil); padding:8px 0;
+  border-bottom:1px solid rgba(0,0,0,0.06); display:flex; align-items:center; gap:8px; line-height:1.4;
+}
+.form-cat li:last-child { border-bottom:none; }
+.form-cat li::before { content:''; width:5px; height:5px; border-radius:50%; flex-shrink:0; }
+.form-cat.rouge li::before{background:var(--rouge);}
+.form-cat.bleu li::before{background:var(--bleu);}
+.form-cat.vert li::before{background:var(--vert);}
+.form-cat.jaune li::before{background:var(--jaune);}
+.form-cat.rouge{border-top-color:var(--rouge);}
+.form-cat.bleu{border-top-color:var(--bleu);}
+.form-cat.vert{border-top-color:var(--vert);}
+.form-cat.jaune{border-top-color:var(--jaune);}
+
+/* ═══ BOUTIQUE À L'ESSAI ═══ */
+.boutique { background:var(--blanc); overflow:hidden; }
+.boutique-callout {
+  background:rgba(245,196,0,0.07); border:1px solid rgba(245,196,0,0.22);
+  border-radius:20px; padding:40px;
+}
+.boutique-callout h3 { font-size:22px; font-weight:900; color:var(--navy); margin-bottom:10px; }
+.boutique-callout > p { font-size:15px; line-height:1.75; color:var(--subtil); margin-bottom:28px; }
+.boutique-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.bs { background:var(--blanc); border-radius:14px; padding:18px; }
+.bs-n { font-size:10.5px; font-weight:800; color:var(--jaune); letter-spacing:1px; margin-bottom:6px; }
+.bs p { font-size:13px; color:var(--subtil); line-height:1.5; }
+
+/* ═══ ORYGIN BATI ═══ */
+.bati-section { background:var(--gris); overflow:hidden; }
+.bati-card {
+  background:var(--blanc); border-radius:22px; padding:44px;
+  display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;
+}
+.bati-logo { margin-bottom:20px; }
+.bati-logo img { height:48px; }
+.bati-card h3 { font-size:24px; font-weight:900; margin-bottom:14px; }
+.bati-card p { font-size:15px; color:var(--subtil); line-height:1.8; margin-bottom:16px; }
+.bati-arrow {
+  display:inline-flex; align-items:center; gap:12px;
+  font-size:14px; font-weight:700; color:var(--vert);
+  padding:14px 24px; background:rgba(46,139,74,0.08);
+  border:1px solid rgba(46,139,74,0.2); border-radius:50px;
+}
+.bati-visual {
+  display:flex; flex-direction:column; gap:10px;
+}
+.bati-step {
+  background:var(--gris); border-radius:12px; padding:16px;
+  display:flex; gap:12px; align-items:center;
+}
+.bati-step .bsi-num {
+  width:30px; height:30px; border-radius:50%; background:var(--vert);
+  color:var(--blanc); display:flex; align-items:center; justify-content:center;
+  font-size:13px; font-weight:800; flex-shrink:0;
+}
+.bati-step p { font-size:13.5px; color:var(--texte); font-weight:600; }
+
+/* ═══ ÉQUIPE ═══ */
+.team { background:var(--blanc); overflow:hidden; }
+.profiles { display:flex; flex-direction:column; gap:36px; }
+.profile {
+  display:grid; grid-template-columns:280px 1fr; gap:40px;
+  background:var(--gris); border-radius:20px; padding:36px;
+  align-items:start;
+}
+.profile:nth-child(even) { grid-template-columns:1fr 280px; }
+.profile:nth-child(even) .prof-left { order:2; }
+.profile:nth-child(even) .prof-right { order:1; }
+.prof-photo {
+  width:100%; aspect-ratio:1/1; object-fit:cover;
+  object-position:top; border-radius:16px; display:block;
+}
+.prof-accent { height:3px; border-radius:2px; margin-bottom:14px; }
+.prof-name { font-size:20px; font-weight:900; color:var(--navy); margin-bottom:4px; }
+.prof-accroche { font-size:14px; color:var(--subtil); margin-bottom:18px; line-height:1.5; }
+.prof-skills { display:flex; flex-direction:column; gap:8px; margin-bottom:18px; }
+.prof-skill { display:flex; gap:10px; }
+.pnum {
+  width:24px; height:24px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:10px; font-weight:800; color:var(--blanc); margin-top:1px;
+}
+.prof-skill h5 { font-size:13px; font-weight:700; margin-bottom:2px; }
+.prof-skill p { font-size:12px; color:var(--subtil); line-height:1.5; }
+.prof-quote {
+  display:flex; gap:10px; background:var(--blanc); border-radius:12px;
+  padding:14px; margin-bottom:14px;
+}
+.prof-quote img { width:28px; height:28px; object-fit:contain; flex-shrink:0; opacity:.7; }
+.prof-quote p { font-size:13px; color:var(--texte); font-style:italic; line-height:1.65; }
+.prof-count {
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--blanc); border-radius:50px; padding:7px 16px;
+}
+.prof-count .n { font-size:16px; font-weight:900; }
+.prof-count .l { font-size:11.5px; color:var(--subtil); }
+
+/* ═══ SITES ═══ */
+.sites { background:var(--gris); overflow:hidden; }
+.sites-grid { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+.site-card {
+  border-radius:20px; min-height:360px; padding:32px;
+  position:relative; overflow:hidden;
+  display:flex; flex-direction:column; justify-content:flex-end;
+}
+.site-bg {
+  position:absolute; inset:0;
+  background-size:cover; background-position:center;
+  filter:brightness(.38); z-index:0;
+}
+.site-content { position:relative; z-index:1; }
+.site-pill {
+  display:inline-block; font-size:11px; font-weight:800;
+  letter-spacing:.5px; padding:5px 13px; border-radius:50px;
+  margin-bottom:14px; width:fit-content;
+}
+.site-card.cayenne .site-pill { background:rgba(0,118,190,.3); color:var(--blanc); border:1px solid rgba(0,118,190,.4); }
+.site-card.remire .site-pill { background:var(--jaune); color:var(--navy); }
+.site-card h3 { color:var(--blanc); font-size:22px; font-weight:900; margin-bottom:8px; }
+.site-card p { color:rgba(255,255,255,.85); font-size:13.5px; line-height:1.6; max-width:360px; }
+.site-addr { margin-top:14px; padding-top:14px; border-top:1px solid rgba(255,255,255,.18); }
+.site-addr p { color:rgba(255,255,255,.9); font-size:13px; line-height:1.65; }
+.sites-teaser { margin-top:22px; padding:18px 24px; border-radius:14px; background:var(--blanc); display:flex; align-items:center; gap:12px; }
+.sites-teaser p { font-size:14px; color:var(--subtil); }
+
+/* ═══ TIMELINE ═══ */
+.tl-section { background:var(--navy); overflow:hidden; }
+.tl-section h2.sh { color:var(--blanc); }
+.tl-section .sp { color:rgba(255,255,255,.6); }
+.timeline { display:flex; position:relative; margin-bottom:32px; }
+.timeline::before {
+  content:''; position:absolute; top:25px; left:26px; right:26px;
+  height:2px; background:rgba(255,255,255,.08);
+}
+.tl-item { flex:1; padding:0 10px; }
+.tl-dot {
+  width:50px; height:50px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:17px; margin-bottom:14px; position:relative; z-index:1;
+  border:2px solid;
+}
+.tl-item.done .tl-dot { border-color:var(--vert); background:rgba(46,139,74,.15); }
+.tl-item.now  .tl-dot { border-color:var(--jaune); background:rgba(245,196,0,.15); animation:glow 2s infinite; }
+.tl-item.next .tl-dot { border-color:rgba(255,255,255,.15); background:rgba(255,255,255,.04); }
+@keyframes glow { 0%,100%{box-shadow:0 0 0 0 rgba(245,196,0,.3)} 50%{box-shadow:0 0 0 8px rgba(245,196,0,0)} }
+.tl-s { font-size:9.5px; font-weight:800; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; }
+.tl-item.done .tl-s{color:var(--vert);} .tl-item.now .tl-s{color:var(--jaune);} .tl-item.next .tl-s{color:rgba(255,255,255,.3);}
+.tl-item h4 { color:var(--blanc); font-size:13.5px; font-weight:700; margin-bottom:5px; }
+.tl-item p { color:rgba(255,255,255,.45); font-size:12px; line-height:1.6; }
+.tl-box { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07); border-radius:16px; padding:26px 30px; }
+.tl-box h4 { color:var(--blanc); font-size:15px; font-weight:700; margin-bottom:16px; }
+.sl { display:flex; flex-direction:column; gap:9px; }
+.si { display:flex; align-items:center; gap:10px; font-size:13.5px; }
+.si.done{color:rgba(255,255,255,.82);} .si.now{color:var(--jaune);} .si.next{color:rgba(255,255,255,.35);}
+.sd { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+.si.done .sd{background:var(--vert);} .si.now .sd{background:var(--jaune);} .si.next .sd{background:rgba(255,255,255,.2);}
+
+/* ═══ CONTACT ═══ */
+.contact-section { background:var(--blanc); overflow:hidden; }
+.contact-grid { display:grid; grid-template-columns:1fr 1.4fr; gap:52px; align-items:start; }
+.c-info h3 { font-size:20px; font-weight:900; margin-bottom:24px; }
+.c-items { display:flex; flex-direction:column; gap:16px; }
+.c-item { display:flex; align-items:center; gap:14px; }
+.c-item img { width:44px; height:44px; object-fit:contain; flex-shrink:0; }
+.c-item div span { display:block; font-size:11px; font-weight:700; letter-spacing:.7px; text-transform:uppercase; color:var(--subtil); margin-bottom:3px; }
+.c-item div p { font-size:14px; line-height:1.6; }
+.c-form { background:var(--gris); border-radius:22px; padding:34px; }
+.c-form h3 { font-size:20px; font-weight:900; margin-bottom:24px; }
+.frow { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.fg { margin-bottom:14px; }
+.fg label { display:block; font-size:11.5px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; color:var(--subtil); margin-bottom:7px; }
+.fg input, .fg select, .fg textarea {
+  width:100%; background:var(--blanc); border:1px solid rgba(0,0,0,0.1);
+  color:var(--texte); border-radius:11px; padding:12px 15px;
+  font-size:13.5px; font-family:inherit; transition:border-color .2s; outline:none;
+}
+.fg input:focus, .fg select:focus, .fg textarea:focus { border-color:var(--rouge); }
+.fg textarea { resize:vertical; min-height:100px; }
+.btn-form {
+  width:100%; background:var(--rouge); color:var(--blanc);
+  padding:15px; border-radius:50px; font-weight:700; font-size:15px;
+  border:none; cursor:pointer; box-shadow:0 5px 16px rgba(230,48,39,.38);
+  transition:transform .2s; margin-top:4px; font-family:inherit;
+}
+.btn-form:hover { transform:translateY(-2px); }
+
+/* ═══ FOOTER ═══ */
+footer { background:var(--navy); padding:48px var(--pad) 22px; }
+.footer-inner { display:grid; grid-template-columns:1.6fr 1fr 1fr; gap:44px; margin-bottom:34px; }
+.footer-logos { display:flex; align-items:center; gap:16px; margin-bottom:14px; flex-wrap:wrap; }
+.footer-logos img.fl { height:36px; }
+.footer-div { width:1px; height:26px; background:rgba(255,255,255,.15); }
+.footer-tag { font-size:13px; color:rgba(255,255,255,.45); line-height:1.7; max-width:250px; margin-bottom:8px; }
+footer h5 { color:var(--blanc); font-size:13.5px; font-weight:700; margin-bottom:14px; }
+footer a, footer .fl-t {
+  color:rgba(255,255,255,.5); text-decoration:none;
+  display:block; font-size:13px; margin-bottom:8px; line-height:1.6;
+}
+footer a:hover { color:var(--jaune); }
+.footer-bottom {
+  border-top:1px solid rgba(255,255,255,.07); padding-top:18px;
+  display:flex; justify-content:space-between;
+  font-size:11.5px; color:rgba(255,255,255,.28); flex-wrap:wrap; gap:8px;
+}
+
+/* ═══ REVEAL ANIMATIONS ═══ */
+.reveal { opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity:1; transform:none; }
+.s1{transition-delay:.07s;} .s2{transition-delay:.14s;} .s3{transition-delay:.21s;} .s4{transition-delay:.28s;}
+
+/* ═══ RESPONSIVE ═══ */
+
+@media(prefers-reduced-motion: reduce) {
+  .embleme-img { animation:none; }
+  .reveal { opacity:1; transform:none; transition:none; }
+}
+
+@keyframes fadeUp   { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:none} }
+@keyframes fadeLeft { from{opacity:0;transform:translateX(-28px)} to{opacity:1;transform:none} }
+@keyframes fadeRight{ from{opacity:0;transform:translateX(28px)} to{opacity:1;transform:none} }
+@keyframes scaleIn  { from{opacity:0;transform:scale(.92)} to{opacity:1;transform:scale(1)} }
+.anim-up    { opacity:0; }
+.anim-left  { opacity:0; }
+.anim-right { opacity:0; }
+.anim-scale { opacity:0; }
+.anim-up.in    { animation:fadeUp    .65s cubic-bezier(.2,.8,.2,1) forwards; }
+.anim-left.in  { animation:fadeLeft  .65s cubic-bezier(.2,.8,.2,1) forwards; }
+.anim-right.in { animation:fadeRight .65s cubic-bezier(.2,.8,.2,1) forwards; }
+.anim-scale.in { animation:scaleIn   .55s cubic-bezier(.2,.8,.2,1) forwards; }
+.d1{animation-delay:.08s!important} .d2{animation-delay:.16s!important}
+.d3{animation-delay:.24s!important} .d4{animation-delay:.32s!important}
+.card-hover { transition:transform .28s ease, box-shadow .28s ease; }
+.card-hover:hover { transform:translateY(-6px); box-shadow:0 16px 40px rgba(0,0,0,.12)!important; }
+
+/* ── ANIMATIONS PROFESSIONNELLES ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeLeft {
+  from { opacity:0; transform:translateX(-20px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+@keyframes fadeRight {
+  from { opacity:0; transform:translateX(20px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+@keyframes scaleIn {
+  from { opacity:0; transform:scale(0.95); }
+  to   { opacity:1; transform:scale(1); }
+}
+.rev    { opacity:0; }
+.rev.in { animation:fadeUp   .6s cubic-bezier(.25,.8,.25,1) forwards; }
+.rev-l  { opacity:0; }
+.rev-l.in { animation:fadeLeft .6s cubic-bezier(.25,.8,.25,1) forwards; }
+.rev-r  { opacity:0; }
+.rev-r.in { animation:fadeRight .6s cubic-bezier(.25,.8,.25,1) forwards; }
+.rev-s  { opacity:0; }
+.rev-s.in { animation:scaleIn .5s cubic-bezier(.25,.8,.25,1) forwards; }
+.d1 { animation-delay:.10s!important; }
+.d2 { animation-delay:.20s!important; }
+.d3 { animation-delay:.30s!important; }
+.d4 { animation-delay:.40s!important; }
+.d5 { animation-delay:.50s!important; }
+/* Hover carte — subtil */
+.card-lift {
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.card-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 36px rgba(0,0,0,.10) !important;
+}
+
+/* ═══ RESPONSIVE MOBILE — ajouts ═══ */
+.burger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:6px; background:none; border:none; z-index:300; }
+.burger span { display:block; width:24px; height:2px; background:var(--navy); border-radius:2px; transition:transform .3s, opacity .3s; }
+.burger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity:0; }
+.burger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+nav.open { display:flex !important; }
+
+@media(max-width:900px){
+  .burger { display:flex; }
+  nav {
+    display:none;
+    position:fixed; top:0; left:0; right:0; bottom:0;
+    background:var(--blanc);
+    flex-direction:column;
+    align-items:center; justify-content:center;
+    gap:28px;
+    z-index:250;
+  }
+  nav a { font-size:20px; opacity:1; }
+  .btn-nav { font-size:16px; padding:14px 32px; }
+  .hero { min-height:auto; padding:100px 18px 50px; }
+  .hero-content { max-width:100%; }
+  h1 { font-size:clamp(24px,7vw,40px) !important; }
+  .hero-pre { font-size:9px; }
+  .hero-stats { gap:12px; flex-wrap:wrap; }
+  .hero-chips { flex-wrap:wrap; gap:10px; }
+  .chip { min-width:140px; }
+  .section-inner { padding:0 !important; }
+  h2 { font-size:clamp(20px,5vw,32px) !important; }
+  .footer-inner { grid-template-columns:1fr !important; gap:24px; }
+  .values-grid, .val-grid { grid-template-columns:1fr !important; }
+  .sites-grid { grid-template-columns:1fr !important; }
+  .site-card { min-height:280px; }
+  .poles-grid { grid-template-columns:1fr !important; }
+  .contact-grid { grid-template-columns:1fr !important; }
+  .form-cats { grid-template-columns:1fr 1fr !important; }
+  .profiles { gap:32px; }
+  .profile, .profile:nth-child(even) { grid-template-columns:1fr !important; }
+  .prof-photo { max-width:200px; margin:0 auto 16px; }
+  .frow, .form-grid { grid-template-columns:1fr !important; }
+  .formation-card { padding:20px; }
+  .edpg-hero-grid { grid-template-columns:1fr !important; }
+  .passeports-grid { grid-template-columns:1fr !important; }
+  .modules-grid { grid-template-columns:1fr !important; }
+  .parcours-header { grid-template-columns:1fr !important; }
+  .phase-item { grid-template-columns:1fr !important; }
+  .for-who { grid-template-columns:1fr !important; }
+  .suivi-steps { flex-direction:column; gap:16px; }
+  .p-step { padding:20px 16px; }
+  table { font-size:13px; }
+  .chip { padding:12px 14px; }
+  .stat .n { font-size:clamp(22px,6vw,36px); }
+  .constat-cols { grid-template-columns:1fr !important; }
+  .concept-embleme-wrap { grid-template-columns:1fr !important; }
+  .bati-card { grid-template-columns:1fr !important; }
+  .boutique-steps { grid-template-columns:1fr !important; }
+  .timeline { flex-direction:column; gap:16px; }
+  .timeline::before { display:none; }
+  .embleme-img { width:160px !important; }
+  .btn-primary, .btn-outline, .btn-nav { white-space:normal; text-align:center; }
+  img { height:auto; }
+}
+
+@media(max-width:480px){
+  section { padding:40px 14px !important; }
+  header { padding:10px 14px; }
+  .header-logo img { height:44px; }
+  h1 { font-size:clamp(22px,8vw,32px) !important; }
+  h2 { font-size:clamp(18px,6vw,26px) !important; }
+  .form-cats { grid-template-columns:1fr !important; }
+  .boutique-steps { grid-template-columns:1fr !important; }
+  .hero-stats { flex-direction:column; gap:8px; }
+  .stat { text-align:center; }
+  .val { padding:16px !important; }
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="stripe"><span style="background:var(--rouge)"></span><span style="background:var(--jaune)"></span><span style="background:var(--bleu)"></span><span style="background:var(--vert)"></span></div>
+<header>
+  <div class="header-logo">
+    <a href="index.html"><img src="assets/logo-header.png" alt="SCOP ORYGIN"></a>
+  </div>
+  <nav><a href="index.html">Accueil</a><a href="concept.html">Qui sommes&#8209;nous&nbsp;?</a><a href="poles.html">Nos pôles</a><a href="parcours.html" style="color:var(--rouge);opacity:1;font-weight:800">Nos parcours</a><a href="formation.html">Formations</a><a href="edpg.html">EDPG</a><a href="sites.html">Nos sites</a><a href="contact.html">Contact</a></nav>
+  <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <a href="contact.html" class="btn-nav">Nous contacter</a>
+</header>
+<style>
+.tabs-nav { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:36px; border-bottom:2px solid rgba(0,0,0,0.07); padding-bottom:0; }
+.tab-btn {
+  padding:12px 22px; background:transparent; border:none; border-bottom:3px solid transparent;
+  font-size:14px; font-weight:700; cursor:pointer; font-family:inherit; color:var(--subtil);
+  transition:all .2s; margin-bottom:-2px; border-radius:4px 4px 0 0;
+}
+.tab-btn.active { color:var(--rouge); border-bottom-color:var(--rouge); background:rgba(230,48,39,.04); }
+.tab-btn:hover:not(.active) { color:var(--navy); background:rgba(0,0,0,.03); }
+.tab-panel { display:none; animation:fadeIn .3s ease; }
+.tab-panel.active { display:block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+
+.parcours-header {
+  display:grid; grid-template-columns:1fr 3fr; gap:40px; align-items:start;
+  padding:36px; background:var(--gris); border-radius:20px; margin-bottom:32px;
+}
+.parcours-kpi { display:flex; flex-direction:column; gap:14px; }
+.kpi { background:var(--blanc); border-radius:12px; padding:16px; text-align:center; }
+.kpi .kval { font-size:28px; font-weight:900; color:var(--rouge); }
+.kpi .klbl { font-size:11px; color:var(--subtil); text-transform:uppercase; letter-spacing:.8px; margin-top:4px; }
+.parcours-desc h2 { font-size:26px; font-weight:900; margin-bottom:10px; color:var(--navy); }
+.parcours-desc .tagline { font-size:15px; color:var(--subtil); margin-bottom:16px; font-style:italic; }
+.parcours-desc p { font-size:14.5px; line-height:1.8; color:var(--texte); }
+.parcours-desc .public-box {
+  margin-top:18px; padding:16px; background:var(--blanc); border-radius:12px;
+  border-left:3px solid var(--rouge);
+}
+.parcours-desc .public-box h4 { font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.8px; color:var(--rouge); margin-bottom:8px; }
+.parcours-desc .public-box p { font-size:13px; color:var(--subtil); }
+
+.phases-grid { display:flex; flex-direction:column; gap:16px; margin-top:24px; }
+.phase-item {
+  background:var(--blanc); border-radius:16px; padding:24px 28px;
+  border-left:4px solid var(--rouge); display:grid; grid-template-columns:80px 1fr; gap:24px; align-items:start;
+}
+.phase-num { text-align:center; }
+.phase-num .pn { font-size:32px; font-weight:900; color:var(--rouge); line-height:1; }
+.phase-num .pt { font-size:10px; color:var(--subtil); text-transform:uppercase; letter-spacing:.6px; }
+.phase-content h4 { font-size:16px; font-weight:800; color:var(--navy); margin-bottom:6px; }
+.phase-content .ptitle { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.8px; color:var(--rouge); margin-bottom:8px; }
+.phase-content p { font-size:13.5px; color:var(--subtil); line-height:1.7; }
+.phase-content .livrable { margin-top:10px; padding:10px 14px; background:var(--gris); border-radius:8px; font-size:12.5px; color:var(--texte); }
+.phase-content .livrable strong { color:var(--vert); }
+
+.for-who { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:24px; }
+.for-card { background:var(--blanc); border-radius:12px; padding:20px; border-top:3px solid var(--bleu); }
+.for-card h4 { font-size:13px; font-weight:700; margin-bottom:8px; color:var(--navy); }
+.for-card p { font-size:12.5px; color:var(--subtil); line-height:1.5; }
+
+.suivi-box { background:var(--navy); border-radius:20px; padding:32px; margin-top:28px; color:white; }
+.suivi-box h3 { font-size:18px; font-weight:800; margin-bottom:20px; color:var(--blanc); }
+.suivi-steps { display:flex; gap:0; }
+.suivi-step { flex:1; padding:0 16px; position:relative; text-align:center; }
+.suivi-step::after { content:''; position:absolute; top:14px; right:0; width:1px; height:40px; background:rgba(255,255,255,.1); }
+.suivi-step:last-child::after { display:none; }
+.suivi-step .ss-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.8px; color:var(--jaune); margin-bottom:6px; }
+.suivi-step p { font-size:12.5px; color:rgba(255,255,255,.7); line-height:1.5; }
+
+
+</style>
+<section style="background:var(--gris);padding:60px var(--pad) 40px;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <span class="ey anim-up">Nos parcours</span>
+    <h1 class="sh anim-up d1">Des trajectoires concrètes,<br>construites avec vous.</h1>
+    <p class="sp anim-up d2">Cinq parcours distincts, pensés pour répondre à des situations réelles. Chaque parcours est personnalisé, accompagné et produit des livrables concrets à chaque étape.</p>
+  </div>
+</section>
+
+<section id="tabs-section" style="background:var(--blanc);padding:48px var(--pad);">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="tabs-nav">
+      <button class="tab-btn active" data-tab="tab-libre" onclick="openTab('tab-libre')">LIBRE</button>
+      <button class="tab-btn" data-tab="tab-bati" onclick="openTab('tab-bati')">BATI</button>
+      <button class="tab-btn" data-tab="tab-douvan" onclick="openTab('tab-douvan')">DOUVAN</button>
+      <button class="tab-btn" data-tab="tab-kanbwa" onclick="openTab('tab-kanbwa')">KANBWA</button>
+      <button class="tab-btn" data-tab="tab-ankre" onclick="openTab('tab-ankre')">ANKRE</button>
+    </div>
+
+    <!-- LIBRE -->
+    <div class="tab-panel active" id="tab-libre">
+      <div class="parcours-header">
+        <div class="parcours-kpi">
+          <div class="kpi"><div class="kval">5</div><div class="klbl">Mois de parcours</div></div>
+          <div class="kpi"><div class="kval">6</div><div class="klbl">Experts du territoire</div></div>
+          <div class="kpi"><div class="kval" style="font-size:18px;">360°</div><div class="klbl">Accompagnement</div></div>
+        </div>
+        <div class="parcours-desc">
+          <h2>LIBRE — Libérer. Initier. Bâtir. Révéler. Evoluer.</h2>
+          <p class="tagline">Votre projet de vie devient votre activité.</p>
+          <p>LIBRE s'adresse aux personnes éloignées de l'emploi qui ont une idée ou un savoir-faire mais ne savent pas comment le transformer en activité. Le parcours offre un espace sécurisé pour reconstruire la confiance, clarifier le projet et poser les premières fondations — à leur rythme, avec une équipe de 6 experts.</p>
+          <div class="public-box">
+            <h4>A qui s'adresse LIBRE ?</h4>
+            <p>Personnes éloignées de l'emploi depuis plusieurs mois ou années — porteurs d'une idée ou d'un savoir-faire à transformer en activité — publics suivis par France Travail, Mission Locale, CTG ou un travailleur social — personnes souhaitant créer leur propre emploi, à leur rythme.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Diagnostic d'entrée -->
+      <div style="background:rgba(0,118,190,0.07);border:1px solid rgba(0,118,190,0.2);border-radius:14px;padding:20px 24px;margin-bottom:20px;">
+        <p style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--bleu);margin-bottom:8px;">Avant le parcours — Jour 1 collectif</p>
+        <h4 style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:8px;">Diagnostic d'entrée — Feuille commune</h4>
+        <p style="font-size:13.5px;color:var(--subtil);line-height:1.7;">Chaque parcours LIBRE démarre par une séance d'ouverture avec l'équipe complète. Chaque participant fait l'objet d'un <strong>diagnostic partagé</strong> conduit par l'ensemble des experts — profil, ressources, besoins — pour garantir que l'orientation vers LIBRE repose sur des critères clairs et partagés. Une feuille de route personnalisée est construite dès ce premier jour.</p>
+      </div>
+
+      <div class="phases-grid">
+        <div class="phase-item">
+          <div class="phase-num"><div class="pn">01</div><div class="pt">Mois 1</div></div>
+          <div class="phase-content">
+            <p class="ptitle">Reboot — Reconstruire la posture</p>
+            <h4>Audit compétences & diagnostic psychologique</h4>
+            <p>Philippe réalise un audit complet du parcours professionnel : compétences acquises, savoir-faire informels, expériences marquantes. La psychologue du travail conduit 1 à 2 séances de diagnostic : analyse de la situation, identification des ressources, des freins et des besoins. Ses conclusions alimentent directement la feuille de route personnalisée.</p>
+            <div class="livrable"><strong>Livrable :</strong> Bilan d'entrée — cartographie des compétences, profil de départ, feuille de route personnalisée.</div>
+          </div>
+        </div>
+
+        <div class="phase-item">
+          <div class="phase-num"><div class="pn">02</div><div class="pt">Mois 2</div></div>
+          <div class="phase-content">
+            <p class="ptitle">Emergence — Le projet prend forme</p>
+            <h4>Structuration du projet entrepreneurial</h4>
+            <p>Le projet sort de l'intention pour entrer dans le concret. L'idée est formalisée, la vision clarifiée, les premiers contours posés. La structuration du projet suit : analyse SWOT, objectifs SMART, confrontation à la réalité économique locale, ébauche du Business Model Canvas et première trame de Business Plan.</p>
+            <div class="livrable"><strong>Livrable :</strong> Idée formalisée + analyse SWOT + objectifs SMART + Business Model Canvas + trame de Business Plan + passation documentée vers la phase Outillage.</div>
+          </div>
+        </div>
+
+        <div class="phase-item">
+          <div class="phase-num"><div class="pn">03</div><div class="pt">Mois 3</div></div>
+          <div class="phase-content">
+            <p class="ptitle">Outillage — S'équiper pour exister</p>
+            <h4>Identité visuelle & stratégie de communication</h4>
+            <p>Travail sur les valeurs et le concept visuel. Développement de l'identité graphique et des supports de communication, avec une stratégie ciblée selon vos moyens et vos cibles. Cohérence commerciale et économique d'ensemble assurée par l'équipe.</p>
+            <div class="livrable"><strong>Livrable :</strong> Kit de démarrage minimal — logo, supports essentiels, stratégie de communication, premières cibles commerciales identifiées.</div>
+          </div>
+        </div>
+
+        <div class="phase-item">
+          <div class="phase-num"><div class="pn">04</div><div class="pt">Mois 4</div></div>
+          <div class="phase-content">
+            <p class="ptitle">Fondations — Devenir légitime</p>
+            <h4>Création juridique & administrative</h4>
+            <p>Toutes les démarches administratives sont pilotées : immatriculation, SIRET, URSSAF, CFE, courriers officiels. Les obligations fiscales et comptables sont cadrées dès le démarrage — régime adapté, déclarations, calendrier.</p>
+            <div class="livrable"><strong>Livrable :</strong> Dossier Fondations — entreprise immatriculée, obligations connues, premier calendrier fiscal.</div>
+          </div>
+        </div>
+
+        <div class="phase-item">
+          <div class="phase-num"><div class="pn">05</div><div class="pt">Fin Mois 5</div></div>
+          <div class="phase-content">
+            <p class="ptitle">Décollage — Pitch Final collectif</p>
+            <h4>Présentation & mise en réseau</h4>
+            <p>Vous présentez votre parcours et votre activité devant les 6 experts et des partenaires extérieurs (prescripteurs, ADIE, CCI, acteurs de l'insertion). Premier rendez-vous professionnel grandeur nature — un moment de reconnaissance, pas une évaluation. L'équipe valide votre dossier et vous connecte aux bons réseaux.</p>
+            <div class="livrable"><strong>Livrable :</strong> Attestation de parcours LIBRE + intégration dans la communauté des anciens bénéficiaires.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Suivi post-parcours -->
+      <div class="suivi-box">
+        <h3>Suivi post-parcours</h3>
+        <div class="suivi-steps">
+          <div class="suivi-step"><div class="ss-label">3 mois après</div><p>Premier bilan post-lancement. Levée des obstacles opérationnels et administratifs. Ajustements si besoin.</p></div>
+          <div class="suivi-step"><div class="ss-label">6 mois après</div><p>Bilan de mi-parcours. Difficultés traitées, cap confirmé ou réorienté.</p></div>
+          <div class="suivi-step"><div class="ss-label">12 mois après</div><p>Bilan annuel. Intégration dans la communauté d'anciens bénéficiaires LIBRE. Passage vers BATI si le projet est prêt.</p></div>
+        </div>
+      </div>
+
+      <!-- Financement -->
+      <div style="margin-top:20px;">
+        <h3 style="font-size:16px;font-weight:800;color:var(--navy);margin-bottom:16px;">Financement</h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+          <div style="background:var(--gris);border-radius:14px;padding:18px;border-top:3px solid var(--bleu);">
+            <p style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--bleu);margin-bottom:8px;">Voie principale</p>
+            <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:6px;">Financement public</h4>
+            <p style="font-size:12.5px;color:var(--subtil);line-height:1.6;">Prise en charge intégrale par CTG, France Travail, Mission Locale, DEAL ou fonds FSE. Votre prescripteur constitue le dossier avec vous.</p>
+          </div>
+          <div style="background:var(--gris);border-radius:14px;padding:18px;border-top:3px solid var(--jaune);">
+            <p style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#8a6e00;margin-bottom:8px;">Financement mixte</p>
+            <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:6px;">Co-financement</h4>
+            <p style="font-size:12.5px;color:var(--subtil);line-height:1.6;">Financement institutionnel complété par une participation symbolique et progressive du bénéficiaire selon ses capacités. Montage personnalisé.</p>
+          </div>
+          <div style="background:var(--gris);border-radius:14px;padding:18px;border-top:3px solid var(--vert);">
+            <p style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--vert);margin-bottom:8px;">Achat institutionnel</p>
+            <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:6px;">Marché public</h4>
+            <p style="font-size:12.5px;color:var(--subtil);line-height:1.6;">Pour les collectivités, associations et opérateurs d'insertion souhaitant intégrer LIBRE dans leur offre. Offre packagée avec reporting.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- BATI -->
+    <div class="tab-panel" id="tab-bati">
+      <div class="parcours-header">
+        <div class="parcours-kpi">
+          <div class="kpi"><div class="kval">10</div><div class="klbl">Semaines de parcours</div></div>
+          <div class="kpi"><div class="kval">5</div><div class="klbl">Experts du territoire</div></div>
+          <div class="kpi"><div class="kval" style="font-size:18px;">360°</div><div class="klbl">Accompagnement</div></div>
+        </div>
+        <div class="parcours-desc">
+          <h2>BATI — Bâtir. Ancrer. Transformer. Innover.</h2>
+          <p class="tagline">Votre activité informelle devient votre entreprise.</p>
+          <p>BATI s'adresse à deux profils : les <strong>entrepreneurs informels</strong> — ceux qui exercent une activité réelle sans structure juridique — et les <strong>porteurs de projets autonomes</strong> qui ont une idée solide et veulent la bâtir sur des fondations sérieuses. Dans les deux cas, ce qui manque c'est la structure pour faire reconnaître ce que vous savez faire.</p>
+          <div class="public-box">
+            <h4>A qui s'adresse BATI ?</h4>
+            <p>Entrepreneurs exerçant une activité informelle depuis au moins un an — porteurs de projets autonomes voulant une forme professionnelle — acteurs souhaitant accéder à des clients plus importants (collectivités, promoteurs, entreprises) — personnes prêtes à se déclarer mais qui ne savent pas par où commencer — toute personne ayant besoin d'une image professionnelle et voulant comprendre la fiscalité.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Diagnostic d'entrée -->
+      <div style="background:rgba(46,139,74,0.07);border:1px solid rgba(46,139,74,0.2);border-radius:14px;padding:20px 24px;margin-bottom:20px;">
+        <p style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--vert);margin-bottom:8px;">Avant le parcours — Jour 1 collectif</p>
+        <h4 style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:8px;">Diagnostic d'entrée — Feuille commune</h4>
+        <p style="font-size:13.5px;color:var(--subtil);line-height:1.7;">Chaque parcours BATI démarre par une séance d'ouverture avec les 5 experts. Vous présentez votre activité. Chacun l'éclaire depuis son domaine. La feuille de route personnalisée est posée ensemble — orientation vers BATI ou LIBRE sur des critères clairs, lisibles et partagés.</p>
+      </div>
+
+      <div class="phases-grid">
+        <div class="phase-item" style="border-left-color:var(--bleu);">
+          <div class="phase-num"><div class="pn" style="color:var(--bleu);">01</div><div class="pt">Sem. 1–2</div></div>
+          <div class="phase-content">
+            <p class="ptitle" style="color:var(--bleu);">Ancrage — Comprendre la réalité</p>
+            <h4>Diagnostic 360° de l'activité existante</h4>
+            <p>Cartographie terrain, clients réels, flux financiers, potentiel de structuration. Audit fiscal et organisationnel — risques identifiés, statut juridique recommandé. Pré-vérification de la situation administrative. Le dossier est transmis en fin de phase pour préparer les Fondations.</p>
+            <div class="livrable"><strong>Livrable :</strong> Rapport Ancrage — photo fidèle de départ, risques cartographiés, statut recommandé.</div>
+          </div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--bleu);">
+          <div class="phase-num"><div class="pn" style="color:var(--bleu);">02</div><div class="pt">Sem. 3–5</div></div>
+          <div class="phase-content">
+            <p class="ptitle" style="color:var(--bleu);">Architecture — Construire le modèle économique</p>
+            <h4>Business model & plan de développement</h4>
+            <p>Business model réaliste, politique de prix juste et argumentée, organisation de l'activité pour grandir. Marchés prioritaires, plan de développement 12 mois. Projection de chiffre d'affaires, seuils de rentabilité, organisation comptable. Victor prend connaissance du projet pour préparer la construction de l'identité visuelle.</p>
+            <div class="livrable"><strong>Livrable :</strong> Business Plan simplifié + Plan de développement 12 mois.</div>
+          </div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--bleu);">
+          <div class="phase-num"><div class="pn" style="color:var(--bleu);">03</div><div class="pt">Sem. 6–8</div></div>
+          <div class="phase-content">
+            <p class="ptitle" style="color:var(--bleu);">Visibilité — Exister aux yeux de vos clients</p>
+            <h4>Identité visuelle & stratégie de communication</h4>
+            <p>Co-construction de l'identité visuelle : valeurs, univers, concept logo. Développement de la charte graphique et des supports professionnels. Stratégie de communication posée en parallèle : canaux, message, positionnement. Cohérence avec la stratégie commerciale assurée par l'équipe.</p>
+            <div class="livrable"><strong>Livrable :</strong> Kit de démarrage professionnel — logo, charte, supports, stratégie de communication.</div>
+          </div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--bleu);">
+          <div class="phase-num"><div class="pn" style="color:var(--bleu);">04</div><div class="pt">Sem. 9–10</div></div>
+          <div class="phase-content">
+            <p class="ptitle" style="color:var(--bleu);">Fondations — Devenir visible et légitime</p>
+            <h4>Formalisation juridique & administrative</h4>
+            <p>Formalisation juridique et administrative : immatriculation, URSSAF, CFE, SIRET, courriers officiels. Cadrage des obligations fiscales au démarrage — régime adapté, déclarations, calendrier. Vous existez officiellement. Vous êtes en règle.</p>
+            <div class="livrable"><strong>Livrable :</strong> Dossier Fondations — entreprise immatriculée, obligations connues, calendrier fiscal établi.</div>
+          </div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--vert);">
+          <div class="phase-num"><div class="pn" style="color:var(--vert);">05</div><div class="pt">Fin Sem. 10</div></div>
+          <div class="phase-content">
+            <p class="ptitle" style="color:var(--vert);">Décollage — Pitch Final collectif</p>
+            <h4>Présentation & mise en réseau</h4>
+            <p>Vous présentez votre activité structurée devant les 5 experts et des partenaires extérieurs (ADIE, CCI, prescripteurs). Premier rendez-vous professionnel grandeur nature. Les experts valident le dossier et identifient les derniers angles morts.</p>
+            <div class="livrable"><strong>Livrable :</strong> Attestation parcours BATI + mise en réseau avec la communauté d'anciens bénéficiaires.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Suivi post-parcours -->
+      <div class="suivi-box">
+        <h3>Suivi post-parcours</h3>
+        <div class="suivi-steps">
+          <div class="suivi-step"><div class="ss-label">3 mois après</div><p>Premier bilan post-lancement. Levée des obstacles opérationnels et administratifs. Ajustements si besoin.</p></div>
+          <div class="suivi-step"><div class="ss-label">6 mois après</div><p>Bilan de mi-parcours. Opportunités identifiées, difficultés traitées, cap confirmé ou réorienté.</p></div>
+          <div class="suivi-step"><div class="ss-label">12 mois après</div><p>Bilan annuel. Mise en réseau avec la communauté d'anciens bénéficiaires BATI. Passage à l'étape suivante.</p></div>
+        </div>
+      </div>
+
+      <!-- Financement -->
+      <div style="margin-top:20px;">
+        <h3 style="font-size:16px;font-weight:800;color:var(--navy);margin-bottom:16px;">Financement</h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+          <div style="background:var(--gris);border-radius:14px;padding:18px;border-top:3px solid var(--rouge);">
+            <p style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--rouge);margin-bottom:8px;">Financement personnel</p>
+            <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:6px;">Autofinancement</h4>
+            <p style="font-size:12.5px;color:var(--subtil);line-height:1.6;">Investissement direct dans votre structuration. Paiement en 2 ou 3 fois sur accord. Idéal pour un porteur disposant d'une trésorerie issue de son activité.</p>
+          </div>
+          <div style="background:var(--gris);border-radius:14px;padding:18px;border-top:3px solid var(--jaune);">
+            <p style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#8a6e00;margin-bottom:8px;">Co-financement</p>
+            <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:6px;">Participation mixte</h4>
+            <p style="font-size:12.5px;color:var(--subtil);line-height:1.6;">Votre apport complété par un financement institutionnel (CTG, dispositifs emploi, DEAL). Montage personnalisé selon votre éligibilité.</p>
+          </div>
+          <div style="background:var(--gris);border-radius:14px;padding:18px;border-top:3px solid var(--vert);">
+            <p style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--vert);margin-bottom:8px;">Financement public</p>
+            <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:6px;">Prise en charge totale</h4>
+            <p style="font-size:12.5px;color:var(--subtil);line-height:1.6;">Parcours financé intégralement par une structure publique ou parapublique. Offre packagée pour les acheteurs institutionnels.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- DOUVAN -->
+    <div class="tab-panel" id="tab-douvan">
+      <div class="parcours-header">
+        <div class="parcours-kpi">
+          <div class="kpi"><div class="kval">5</div><div class="klbl">Escales</div></div>
+          <div class="kpi"><div class="kval" style="font-size:22px;">Emploi</div><div class="klbl">Objectif final</div></div>
+          <div class="kpi"><div class="kval" style="font-size:18px;">Sur-mesure</div><div class="klbl">Suivi individualisé</div></div>
+        </div>
+        <div class="parcours-desc">
+          <h2>DOUVAN — Vers l'emploi</h2>
+          <p class="tagline">Un suivi humain et individualisé, de l'orientation jusqu'à l'emploi durable.</p>
+          <p>DOUVAN est le parcours d'insertion professionnelle d'ORYGIN KAMPUS. Il s'adresse aux personnes en recherche d'emploi qui ont besoin d'un accompagnement structuré pour clarifier leur projet, développer leurs compétences et accéder à un emploi co-construit avec l'employeur. Cinq escales progressives, un référent unique, un objectif : l'emploi durable.</p>
+          <div class="public-box">
+            <h4>A qui s'adresse DOUVAN ?</h4>
+            <p>Demandeurs d'emploi — jeunes en insertion — adultes en reconversion — salariés en transition professionnelle — personnes souhaitant une orientation vers un secteur en tension du territoire guyanais.</p>
+          </div>
+        </div>
+      </div>
+      <div class="phases-grid">
+        <div class="phase-item" style="border-left-color:var(--bleu);">
+          <div class="phase-num"><div class="pn" style="color:var(--bleu);">01</div><div class="pt">Escale 1</div></div>
+          <div class="phase-content">
+            <p class="ptitle" style="color:var(--bleu);">Diagnostic & orientation</p>
+            <h4>Clarification du projet professionnel</h4>
+            <p>Bilan des compétences, identification des aptitudes et des freins, définition du projet professionnel. Orientation vers le secteur ou le métier cible.</p>
+          </div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--bleu);">
+          <div class="phase-num"><div class="pn" style="color:var(--bleu);">02</div><div class="pt">Escale 2</div></div>
+          <div class="phase-content">
+            <p class="ptitle" style="color:var(--bleu);">Développement des compétences</p>
+            <h4>Formation & montée en compétences</h4>
+            <p>Remise à niveau, formation complémentaire, travail sur le savoir-être professionnel, préparation aux codes et attentes du monde du travail.</p>
+          </div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--bleu);">
+          <div class="phase-num"><div class="pn" style="color:var(--bleu);">03</div><div class="pt">Escale 3</div></div>
+          <div class="phase-content">
+            <p class="ptitle" style="color:var(--bleu);">Immersion professionnelle</p>
+            <h4>Mise en situation réelle</h4>
+            <p>Immersions en entreprise, découverte des métiers en tension, contact direct avec les employeurs partenaires d'ORYGIN KAMPUS. La Boutique à l'Essai permet des immersions sur site.</p>
+          </div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--bleu);">
+          <div class="phase-num"><div class="pn" style="color:var(--bleu);">04</div><div class="pt">Escale 4</div></div>
+          <div class="phase-content">
+            <p class="ptitle" style="color:var(--bleu);">Mise en relation & négociation</p>
+            <h4>Emploi co-construit avec l'employeur</h4>
+            <p>Mise en relation avec les employeurs, accompagnement à la négociation, sécurisation de la prise de poste. L'emploi est co-construit entre le futur salarié et l'employeur, avec ORYGIN comme tiers de confiance.</p>
+          </div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--vert);">
+          <div class="phase-num"><div class="pn" style="color:var(--vert);">05</div><div class="pt">Escale 5</div></div>
+          <div class="phase-content">
+            <p class="ptitle" style="color:var(--vert);">Sécurisation du parcours</p>
+            <h4>Suivi post-emploi</h4>
+            <p>Accompagnement pendant les premiers mois en poste. Médiation employeur/salarié si nécessaire. Objectif : sécuriser l'intégration et prévenir les ruptures précoces.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KANBWA -->
+    <div class="tab-panel" id="tab-kanbwa">
+      <div class="parcours-header">
+        <div class="parcours-kpi">
+          <div class="kpi"><div class="kval">3</div><div class="klbl">Mois de programme</div></div>
+          <div class="kpi"><div class="kval">15</div><div class="klbl">Agents max par session</div></div>
+          <div class="kpi"><div class="kval">2</div><div class="klbl">Phases en forêt</div></div>
+        </div>
+        <div class="parcours-desc">
+          <h2>KANBWA · Raptor Renforce</h2>
+          <p class="tagline">Préparation physique et mentale à la vie professionnelle en forêt amazonienne.</p>
+          <p>KANBWA est un programme immersif de 3 mois conçu pour les agents de sécurité renforcée armée intervenant en milieu amazonien. Il allie deux phases d'immersion en forêt guyanaise, un suivi interphase continu, et l'acquisition de compétences opérationnelles pour les environnements extrêmes. Le programme est déployé en partenariat avec RAPTOR RENFORCÉ au Camp Cacao.</p>
+          <div class="public-box">
+            <h4>A qui s'adresse KANBWA ?</h4>
+            <p>Agents de sécurité renforcée armée — forces d'intervention en milieu isolé — personnes souhaitant intégrer les métiers de la sécurité en zone amazonienne — publics ciblés par des entreprises partenaires du secteur securité.</p>
+          </div>
+        </div>
+      </div>
+      <div class="phases-grid">
+        <div class="phase-item" style="border-left-color:var(--navy);">
+          <div class="phase-num"><div class="pn" style="color:var(--navy);">01</div><div class="pt">Phase initiale · 3 jours</div></div>
+          <div class="phase-content">
+            <p class="ptitle" style="color:var(--navy);">Immersion & découverte du milieu forestier</p>
+            <h4>Camp Cacao — Forêt amazonienne guyanaise</h4>
+            <p>Découverte de l'environnement forestier amazonien et de ses spécificités. Identification des dangers naturels (faune, flore, conditions climatiques). Techniques de base de vie autonome en forêt. Premiers exercices de cohésion d'équipe en milieu isolé. Patrouille et observation sur terrain isolé.</p>
+            <div class="livrable"><strong>Evaluation :</strong> Evaluation des acquis de base et repérage des axes de progression individuelle.</div>
+          </div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--navy);">
+          <div class="phase-num"><div class="pn" style="color:var(--navy);">--</div><div class="pt">3 mois</div></div>
+          <div class="phase-content">
+            <p class="ptitle" style="color:var(--navy);">Suivi interphase continu</p>
+            <h4>Progression individuelle & collective</h4>
+            <p>Durant les 3 mois du programme, un suivi individuel et collectif est assuré entre les deux immersions : progression physique, travail mental, consolidation des apprentissages, préparation à la phase avancée.</p>
+          </div>
+        </div>
+        <div class="phase-item" style="border-left-color:var(--vert);">
+          <div class="phase-num"><div class="pn" style="color:var(--vert);">02</div><div class="pt">Phase avancée · 3 jours</div></div>
+          <div class="phase-content">
+            <p class="ptitle" style="color:var(--vert);">Consolidation & application opérationnelle</p>
+            <h4>Camp Cacao — Mise en situation réelle</h4>
+            <p>Application pratique de toutes les compétences en situation réelle. Réactivité et prise de décision sous stress en milieu contraint. Gestion du travail d'équipe et communication en mission. Scénarios opérationnels combinant compétences physiques et mentales.</p>
+            <div class="livrable"><strong>Livrable :</strong> Badge de compétences 7/9 — obtenu à l'évaluation finale en condition réelle.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANKRÉ -->
+    <div class="tab-panel" id="tab-ankre">
+      <div class="parcours-header">
+        <div class="parcours-kpi">
+          <div class="kpi"><div class="kval">42h</div><div class="klbl">De formation</div></div>
+          <div class="kpi"><div class="kval">8</div><div class="klbl">Modules</div></div>
+          <div class="kpi"><div class="kval">3</div><div class="klbl">Semaines</div></div>
+        </div>
+        <div class="parcours-desc">
+          <h2>ANKRE — Programme Intensif de Formation Manageriale</h2>
+          <p class="tagline">Tenir sa posture. Exercer son autorité. Agir avec discernement.</p>
+          <p>ANKRE est un programme de formation managériale de 42 heures sur 3 semaines, conçu pour les managers en première ligne dans des environnements exigeants. Il développe cinq compétences clés : Autorité, Nuance, Kadrage, Résilience, Evolution. Disponible en inter-entreprises et en intra sur mesure.</p>
+          <div class="public-box">
+            <h4>A qui s'adresse ANKRE ?</h4>
+            <p>Chefs d'équipe et coordinateurs en zone sécurité — agents de maîtrise et managers terrain en conditions difficiles — responsables de service et cadres de la fonction publique territoriale — tout manager de terrain évoluant en zone sensible ou à fort enjeu humain.</p>
+          </div>
+        </div>
+      </div>
+      <div class="for-who">
+        <div class="for-card"><h4>Autorité (A)</h4><p>Affirmer son autorité managériale sur le terrain — comprendre la nature de son mandat et exercer une autorité légitime.</p></div>
+        <div class="for-card"><h4>Nuance (N)</h4><p>Naviguer avec discernement face à la complexité — décoder les profils de son équipe, adapter sa communication sous stress.</p></div>
+        <div class="for-card"><h4>Kadrage (K)</h4><p>Poser un cadre clair dans un environnement instable — développer sa capacité à analyser une situation tendue avant d'agir.</p></div>
+        <div class="for-card"><h4>Résilience (R)</h4><p>Tenir sa posture sous pression et dans la durée — gérer les conflits, accompagner les fragilités sans en porter le poids.</p></div>
+        <div class="for-card"><h4>Evolution (E)</h4><p>Progresser dans sa fonction et son leadership — construire sa trajectoire managériale sur le long terme.</p></div>
+        <div class="for-card" style="border-top-color:var(--jaune)"><h4>Format disponible</h4><p>Inter-entreprises ou intra-organisation. Programme déployable sur site, adapté à votre contexte et votre secteur d'activité.</p></div>
+      </div>
+      <div class="phases-grid" style="margin-top:24px;">
+        <div class="phase-item" style="border-left-color:var(--jaune);">
+          <div class="phase-num"><div class="pn" style="color:var(--jaune);">42h</div><div class="pt">8 modules</div></div>
+          <div class="phase-content">
+            <p class="ptitle" style="color:var(--jaune);">Programme structuré en progression logique</p>
+            <h4>De la prise de conscience à la mise en situation réelle</h4>
+            <p>Module 1 — Frise professionnelle & nouvelle fonction (3h30) · Module 2 — Mandat et autorité managériale (3h30) · Module 3 — Cartes de couleur & choix de réponse (3h30) · Module 4 — Prise de recul & réponse sous pression (3h30) · Module 5 — Gestion des conflits (3h30) · Module 6 — Accompagner la fragilité (3h30) · Module 7 — Communiquer en situation de crise (3h30) · Module 8 — Mise en situation & bilan (7h).</p>
+            <div class="livrable"><strong>Evaluation :</strong> 24 points d'évaluation répartis sur les 8 modules. Attestation de formation à l'issue.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<script>
+function openTab(tabId) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+  window.scrollTo({top: document.getElementById('tabs-section').offsetTop - 100, behavior:'smooth'});
+}
+
+(function(){
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+  }, {threshold:0.1});
+  document.querySelectorAll('.anim-up,.anim-left,.anim-right,.anim-scale,.reveal').forEach(el=>obs.observe(el));
+})();
+
+/* ── SCROLL OBSERVER ── */
+(function(){
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.rev,.rev-l,.rev-r,.rev-s,.reveal').forEach(el => io.observe(el));
+})();
+
+</script>
+<footer>
+  <div class="footer-inner" style="grid-template-columns:1.4fr 1fr 1fr auto;align-items:start;">
+    <div>
+      <p style="font-size:16px;font-weight:900;color:var(--blanc);margin-bottom:10px;">SCOP ORYGIN</p>
+      <p class="footer-tag">SCOP guyanaise dédiée au développement économique par l'insertion, l'accompagnement et la formation.</p>
+      <p style="font-size:11px;color:rgba(255,255,255,.25);margin-top:6px;">SIREN 101 927 366 000 19</p>
+    </div>
+    <div>
+      <h5>Navigation</h5>
+      <a href="index.html">Accueil</a>
+      <a href="concept.html">Qui sommes&#8209;nous&nbsp;?</a>
+      <a href="poles.html">Nos pôles</a>
+      <a href="parcours.html">Nos parcours</a>
+      <a href="formation.html">Formations</a>
+      <a href="edpg.html">EDPG</a>
+      
+      <a href="sites.html">Nos sites</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div>
+      <h5>Contact</h5>
+      <span class="fl-t">1 avenue Gustave Charlery</span>
+      <span class="fl-t">Buro Club — 97300 Cayenne</span>
+      <span class="fl-t">05 94 27 40 40</span>
+      <a href="mailto:contact@scop-orygin.com">contact@scop-orygin.com</a>
+      <a href="https://www.scop-orygin.com" target="_blank">www.scop-orygin.com</a>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+      <h5 style="text-align:center;">Membre</h5>
+      <img src="assets/logo-ess.png" alt="Marque ESS" style="width:70px;height:auto;">
+      <p style="font-size:9px;color:rgba(255,255,255,.3);text-align:center;line-height:1.4;">Economie Sociale<br>& Solidaire</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 SCOP ORYGIN — orygin kampus</span>
+    <div style="display:flex;gap:16px;">
+      <a href="legal.html" style="color:rgba(255,255,255,.35)">Mentions légales</a>
+      <a href="legal.html#cgu" style="color:rgba(255,255,255,.35)">CGU</a>
+      <a href="legal.html#rgpd" style="color:rgba(255,255,255,.35)">Politique RGPD</a>
+      <a href="legal.html#cookies" style="color:rgba(255,255,255,.35)">Cookies</a>
+    </div>
+  </div>
+</footer>
+<div class="stripe"><span style="background:var(--rouge)"></span><span style="background:var(--jaune)"></span><span style="background:var(--bleu)"></span><span style="background:var(--vert)"></span></div>
+<script>
+/* ─── MODULE PARCOURS ─── */
+const history = [];
+
+function goStep(stepId, label) {
+  // Hide all
+  document.querySelectorAll('.p-step').forEach(s => s.classList.remove('active'));
+  // Show target
+  const target = document.getElementById(stepId);
+  if (target) target.classList.add('active');
+  // Update history
+  if (stepId === 'step-0') {
+    history.length = 0;
+  } else if (label) {
+    history.push(label);
+  }
+  // Update breadcrumb
+  const bc = document.getElementById('parcours-breadcrumb');
+  if (history.length === 0) {
+    bc.innerHTML = '';
+  } else {
+    bc.innerHTML = 'Guichet unique  ' +
+      history.map((l,i) => i === history.length-1
+        ? `<span>${l}</span>` : l
+      ).join('  ');
+  }
+}
+
+/* ─── REVEAL AU SCROLL ─── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+
+</script>
+
+<script>
+(function(){
+  var btn = document.getElementById('burger');
+  var nav = document.querySelector('nav');
+  if(!btn || !nav) return;
+  btn.addEventListener('click', function(){
+    btn.classList.toggle('open');
+    nav.classList.toggle('open');
+    document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
+  });
+  nav.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      btn.classList.remove('open');
+      nav.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+})();
+</script>
+</body>
+</html>
