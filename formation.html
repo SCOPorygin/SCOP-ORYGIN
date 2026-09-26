@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nos formations certifiantes — SCOP ORYGIN</title>
+<title>Nos formations certifiantes et professionnalisantes — SCOP ORYGIN</title>
 <style>
 /* ═══ TOKENS ═══ */
 :root {
@@ -725,6 +725,26 @@ nav.open { display:flex !important; }
   .val { padding:16px !important; }
 }
 
+/* ═══ OVERRIDES MOBILE — grilles inline ═══ */
+@media(max-width:900px){
+  /* RNCP : 1fr 1fr → 1fr */
+  [style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  /* Certifications ORYGIN : repeat(3,1fr) → 1fr */
+  [style*="grid-template-columns:repeat(3,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+  /* Formations courtes : repeat(2,1fr) → 1fr */
+  [style*="grid-template-columns:repeat(2,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+  /* Footer inline */
+  [style*="grid-template-columns:1.4fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 </style>
 
 </head>
@@ -741,7 +761,7 @@ nav.open { display:flex !important; }
 </header>
 <section style="background:var(--gris);padding:60px var(--pad) 40px;">
   <div style="max-width:1100px;margin:0 auto;">
-    <span class="ey anim-up">Nos formations certifiantes</span>
+    <span class="ey anim-up">Nos formations certifiantes et professionnalisantes</span>
     <h1 class="sh anim-up d1">Des certifications reconnues,<br>ancrées dans la réalité guyanaise.</h1>
     <p class="sp anim-up d2">Trois niveaux de certification pour répondre à tous les projets : qualifications RNCP reconnues par l'État, certifications professionnelles ORYGIN, et ateliers courts thématiques.</p>
   </div>

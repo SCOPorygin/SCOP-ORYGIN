@@ -725,6 +725,25 @@ nav.open { display:flex !important; }
   .val { padding:16px !important; }
 }
 
+
+/* ═══ OVERRIDES MOBILE — grilles inline ═══ */
+@media(max-width:900px){
+  [style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns:repeat(3,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns:repeat(2,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns:1.4fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns:1.6fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
 </style>
 
 </head>
@@ -880,14 +899,14 @@ nav.open { display:flex !important; }
       <p>Un cookie est un petit fichier texte déposé sur votre terminal (ordinateur, smartphone, tablette) lors de la visite d'un site web. Il permet au site de mémoriser des informations relatives à votre navigation.</p>
 
       <h3>Cookies utilisés sur ce site</h3>
-      <table class="cookie-table">
+      <div class="table-wrap" style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table class="cookie-table">
         <thead><tr><th>Categorie</th><th>Finalité</th><th>Durée</th><th>Consentement requis</th></tr></thead>
         <tbody>
           <tr><td><strong>Cookies essentiels</strong></td><td>Bon fonctionnement du site, mémorisation de vos préférences de navigation et du consentement aux cookies</td><td>Session ou 13 mois</td><td>Non</td></tr>
           <tr><td><strong>Cookies analytiques</strong></td><td>Mesure d'audience anonymisée — nombre de visites, pages consultées, durée</td><td>13 mois</td><td>Oui</td></tr>
           <tr><td><strong>Cookies fonctionnels</strong></td><td>Mémorisation de vos préférences d'affichage</td><td>13 mois</td><td>Oui</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h3>Gestion de vos préférences</h3>
       <p>Lors de votre première visite sur le site, un bandeau d'information vous permet d'accepter ou de refuser les cookies non essentiels. Vous pouvez modifier vos préférences à tout moment :</p>

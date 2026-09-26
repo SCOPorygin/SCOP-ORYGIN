@@ -725,6 +725,25 @@ nav.open { display:flex !important; }
   .val { padding:16px !important; }
 }
 
+
+/* ═══ OVERRIDES MOBILE — grilles inline ═══ */
+@media(max-width:900px){
+  [style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns:repeat(3,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns:repeat(2,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns:1.4fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns:1.6fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
 </style>
 
 </head>
@@ -887,7 +906,7 @@ nav.open { display:flex !important; }
     <span class="ey anim-up" style="color:var(--jaune);">Tarifs de lancement 2026-2027</span>
     <h2 class="sh anim-up d1" style="color:var(--blanc);">Une formation accessible à tous</h2>
     <p class="sp anim-up d2">Ces tarifs sont des tarifs de lancement. Ils peuvent être adaptés par convention ou partenariat institutionnel.</p>
-    <div style="background:var(--blanc);border-radius:16px;overflow:hidden;margin-top:28px;"><table class="tarifs-table" style="margin-top:0;">
+    <div style="background:var(--blanc);border-radius:16px;overflow:hidden;margin-top:28px;"><div class="table-wrap" style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table class="tarifs-table" style="margin-top:0;">
       <thead>
         <tr><th>Formule</th><th>Public / Format</th><th>Tarif</th></tr>
       </thead>
@@ -901,7 +920,7 @@ nav.open { display:flex !important; }
         <tr><td>Session intra</td><td>Entreprise / association / administration — jusqu'à 12 participants</td><td class="tarif">790 € HT</td></tr>
         <tr><td>Session sur mesure</td><td>Adaptation au contexte et cas du commanditaire</td><td class="tarif">Sur devis</td></tr>
       </tbody>
-    </table></div>
+    </table></div></div>
     <p style="margin-top:20px;font-size:13px;color:rgba(255,255,255,.45);">Financement professionnel : un devis, une convention ou un contrat de formation est établi selon le statut du bénéficiaire et le dispositif mobilisé.</p>
   </div>
 </section>
@@ -936,7 +955,7 @@ nav.open { display:flex !important; }
     <div style="background:rgba(255,255,255,.04);border-radius:16px;padding:28px;margin-bottom:32px;">
       <h3 style="font-size:18px;font-weight:800;color:var(--blanc);margin-bottom:20px;">Les passeports Ambition Concours</h3>
       <div style="overflow:auto;">
-        <table style="width:100%;border-collapse:collapse;">
+        <div class="table-wrap" style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table style="width:100%;border-collapse:collapse;">
           <thead>
             <tr>
               <th style="text-align:left;padding:10px 14px;font-size:12px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid rgba(255,255,255,.1);">Passeport</th>
@@ -951,7 +970,7 @@ nav.open { display:flex !important; }
             <tr><td style="padding:12px 14px;color:rgba(255,255,255,.85);font-size:13.5px;border-bottom:1px solid rgba(255,255,255,.06);">ENM — renforcement & admission</td><td style="padding:12px 14px;color:rgba(255,255,255,.55);font-size:13px;border-bottom:1px solid rgba(255,255,255,.06);">M01–M32 : 96h + 8 ateliers admission</td><td style="padding:12px 14px;color:var(--jaune);font-weight:700;font-size:13.5px;border-bottom:1px solid rgba(255,255,255,.06);text-align:right;">116h</td></tr>
             <tr><td style="padding:12px 14px;color:rgba(255,255,255,.85);font-size:13.5px;">Inspecteur DGFiP — une option</td><td style="padding:12px 14px;color:rgba(255,255,255,.55);font-size:13px;">Socle + F01–F08 + option écrite + admission</td><td style="padding:12px 14px;color:var(--jaune);font-weight:700;font-size:13.5px;text-align:right;">88h</td></tr>
           </tbody>
-        </table>
+        </table></div>
       </div>
       <p style="font-size:12px;color:rgba(255,255,255,.35);margin-top:16px;line-height:1.6;">Formation non diplômante. Attestation de fin de formation décrivant le parcours effectivement suivi. L'admission au concours dépend du jury — l'inscription à l'EDPG ne vaut ni inscription au concours ni validation de ses conditions d'accès.</p>
     </div>
