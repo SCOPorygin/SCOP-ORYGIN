@@ -147,6 +147,8 @@ footer a:hover{color:var(--jaune);}
 /* RESPONSIVE */
 @media(max-width:900px){.fiche-grid{grid-template-columns:1fr;}.footer-inner{grid-template-columns:1fr 1fr;}}
 @media(max-width:760px){
+  header{display:flex;align-items:center;justify-content:space-between;}
+
   #burger{display:flex;}
   nav{display:none;flex-direction:column;align-items:flex-start;gap:4px;position:absolute;top:100%;left:0;right:0;background:var(--blanc);padding:20px var(--pad) 28px;border-bottom:1px solid rgba(0,0,0,.07);box-shadow:0 8px 24px rgba(0,0,0,.08);}
   nav.open{display:flex;}
@@ -550,37 +552,51 @@ footer a:hover{color:var(--jaune);}
 </footer>
 <div class="stripe"><span style="background:var(--rouge)"></span><span style="background:var(--jaune)"></span><span style="background:var(--bleu)"></span><span style="background:var(--vert)"></span></div>
 
+
+<script src="assets/cookies.js" defer></script>
 <script>
+/* ── HAMBURGER + DROPDOWN MOBILE ── */
 (function(){
-  var btn=document.getElementById('burger');
-  var navEl=document.querySelector('nav');
-  if(!btn||!navEl)return;
-  btn.addEventListener('click',function(){
+  var btn = document.getElementById('burger');
+  var navEl = document.querySelector('nav');
+  var dd = document.getElementById('nav-dd');
+  var ddBtn = document.getElementById('nav-dd-btn');
+  if (!btn || !navEl) return;
+
+  /* Ouvre/ferme le menu principal */
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
     btn.classList.toggle('open');
     navEl.classList.toggle('open');
-    document.body.style.overflow=navEl.classList.contains('open')?'hidden':'';
+    document.body.style.overflow = navEl.classList.contains('open') ? 'hidden' : '';
   });
+
+  /* Ferme le menu sur clic d'un lien — SAUF le bouton dropdown "Formations" */
   navEl.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click',function(){
+    if (a === ddBtn) return;  // ne pas fermer sur clic "Formations"
+    a.addEventListener('click', function(){
       btn.classList.remove('open');
       navEl.classList.remove('open');
-      document.body.style.overflow='';
+      document.body.style.overflow = '';
+      if (dd) dd.classList.remove('mob-open');
     });
   });
-})();
-(function(){
-  var dd=document.getElementById('nav-dd');
-  var ddBtn=document.getElementById('nav-dd-btn');
-  if(!dd||!ddBtn)return;
-  ddBtn.addEventListener('click',function(e){
-    if(window.innerWidth<=760){
-      e.preventDefault();
-      dd.classList.toggle('mob-open');
-    }
-  });
-  document.addEventListener('click',function(e){if(!dd.contains(e.target))dd.classList.remove('mob-open');});
+
+  /* Toggle sous-menu "Formations" en mobile */
+  if (dd && ddBtn) {
+    ddBtn.addEventListener('click', function(e){
+      if (window.innerWidth <= 760) {
+        e.preventDefault();
+        e.stopPropagation();
+        dd.classList.toggle('mob-open');
+        ddBtn.setAttribute('aria-expanded', dd.classList.contains('mob-open'));
+      }
+    });
+    document.addEventListener('click', function(e){
+      if (dd && !dd.contains(e.target)) dd.classList.remove('mob-open');
+    });
+  }
 })();
 </script>
-<script src="assets/cookies.js" defer></script>
 </body>
 </html>
