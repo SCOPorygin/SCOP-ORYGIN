@@ -671,15 +671,18 @@ nav.open { display:flex !important; }
   .burger { display:flex; }
   nav {
     display:none;
-    position:fixed; top:0; left:0; right:0; bottom:0;
-    background:var(--blanc);
     flex-direction:column;
-    align-items:center; justify-content:center;
-    gap:28px;
+    align-items:flex-start;
+    gap:4px;
+    position:absolute; top:100%; left:0; right:0;
+    background:var(--blanc);
+    padding:20px var(--pad) 28px;
+    border-bottom:1px solid rgba(0,0,0,.07);
+    box-shadow:0 8px 24px rgba(0,0,0,.08);
     z-index:250;
   }
-  nav a { font-size:20px; opacity:1; }
-  .btn-nav { font-size:16px; padding:14px 32px; }
+  nav a { font-size:16px; opacity:1; padding:10px 0; width:100%; border-bottom:1px solid rgba(0,0,0,.05); }
+  .btn-nav { font-size:16px; padding:14px 32px; margin-top:12px; text-align:center; width:100%; }
   .hero { min-height:auto; padding:100px 18px 50px; }
   .hero-content { max-width:100%; }
   h1 { font-size:clamp(24px,7vw,40px) !important; }
@@ -725,7 +728,7 @@ nav.open { display:flex !important; }
 
 @media(max-width:480px){
   section { padding:40px 14px !important; }
-  header { padding:10px 14px; }
+  header { padding:10px 14px; position:relative; }
   .header-logo img { height:44px; }
   h1 { font-size:clamp(22px,8vw,32px) !important; }
   h2 { font-size:clamp(18px,6vw,26px) !important; }
@@ -1155,7 +1158,7 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     e.stopPropagation();
     btn.classList.toggle('open');
     navEl.classList.toggle('open');
-    document.body.style.overflow = navEl.classList.contains('open') ? 'hidden' : '';
+    // slide-down — pas besoin de bloquer le scroll
   });
 
   /* Ferme le menu sur clic d'un lien — SAUF le bouton dropdown "Formations" */
@@ -1164,7 +1167,7 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     a.addEventListener('click', function(){
       btn.classList.remove('open');
       navEl.classList.remove('open');
-      document.body.style.overflow = '';
+
       if (dd) dd.classList.remove('mob-open');
     });
   });
