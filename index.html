@@ -75,6 +75,17 @@ nav a {
   transition:opacity .2s, color .2s;
 }
 nav a:hover { opacity:1; color:var(--bleu); }
+.nav-dropdown{position:relative;display:flex;align-items:center;}
+.nav-dropdown-link{font-size:14px;font-weight:600;color:var(--navy);opacity:.7;display:flex;align-items:center;gap:5px;white-space:nowrap;transition:opacity .2s,color .2s;cursor:pointer;}
+.nav-dropdown-link svg{width:12px;height:12px;transition:transform .2s;}
+.nav-dropdown:hover .nav-dropdown-link{opacity:1;color:var(--bleu);}
+.nav-dropdown:hover .nav-dropdown-link svg{transform:rotate(180deg);}
+.nav-dropdown::after{content:'';position:absolute;top:100%;left:0;right:0;height:16px;}
+.nav-submenu{position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%) translateY(-4px);background:var(--blanc);border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.07);min-width:220px;padding:8px;z-index:300;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .18s ease,transform .18s ease;}
+.nav-dropdown:hover .nav-submenu{opacity:1;visibility:visible;pointer-events:all;transform:translateX(-50%) translateY(0);}
+.nav-submenu a{display:block;padding:10px 14px;border-radius:10px;font-size:13.5px;font-weight:600;color:var(--navy);opacity:1;transition:background .15s;}
+.nav-submenu a:hover{background:var(--gris);color:var(--bleu);}
+.sub-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:8px;vertical-align:middle;margin-bottom:1px;}
 .btn-nav {
   background:var(--rouge); color:var(--blanc);
   padding:10px 22px; border-radius:50px;
@@ -87,33 +98,42 @@ nav a:hover { opacity:1; color:var(--bleu); }
 
 /* ═══ HERO ═══ */
 .hero {
-  position:relative; min-height:90vh;
-  display:flex; flex-direction:column; justify-content:center;
-  padding:80px var(--pad) 60px;
+  position:relative; min-height:100vh;
+  display:flex; flex-direction:column;
+  padding:0;
   overflow:hidden;
 }
 .hero-bg {
   position:absolute; inset:0;
   background:url('assets/hero-bg.jpg') center/cover no-repeat;
-  filter:brightness(0.3);
+  filter:brightness(0.5);
   z-index:0;
 }
 .hero-grid-veil {
   position:absolute; inset:0; z-index:1;
   background-image:
-    linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px);
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px);
   background-size:52px 52px;
 }
-.hero-content { position:relative; z-index:2; max-width:680px; }
+
+/* Zone titre centré en haut */
+.hero-title-zone {
+  position:relative; z-index:2;
+  flex:1;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:flex-start;
+  text-align:center;
+  padding:28px var(--pad) 0;
+}
 .hero-pre {
   display:inline-flex; align-items:center; gap:10px;
   background:rgba(255,255,255,0.1);
   border:1px solid rgba(255,255,255,0.18);
   color:rgba(255,255,255,0.9);
-  font-size:10px; font-weight:700; letter-spacing:1px;
-  padding:5px 14px; border-radius:50px;
-  margin-bottom:16px;
+  font-size:11px; font-weight:700; letter-spacing:1.2px;
+  padding:6px 18px; border-radius:50px;
+  margin-bottom:12px;
 }
 .hero-pre .dot {
   width:7px; height:7px; border-radius:50%; background:var(--vert);
@@ -121,28 +141,23 @@ nav a:hover { opacity:1; color:var(--bleu); }
 }
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.5)} }
 .hero h1 {
-  font-size:clamp(26px,3.8vw,44px);
-  font-weight:900; line-height:1.06;
+  font-size:clamp(22px,3.2vw,44px);
+  font-weight:900; line-height:1.1;
   color:var(--blanc); letter-spacing:-1px;
-  margin-bottom:8px;
+  margin-bottom:10px;
+  max-width:700px;
 }
 .hero-tagline {
-  font-size:clamp(12px,1.5vw,14px);
-  color:rgba(255,255,255,0.6);
+  font-size:clamp(12px,1.3vw,15px);
+  color:rgba(255,255,255,0.65);
   font-style:italic; letter-spacing:.2px;
-  margin-bottom:16px;
+  margin-bottom:0;
 }
-.hero-sub {
-  font-size:clamp(13px,1.6vw,15px);
-  line-height:1.65; color:rgba(255,255,255,0.72);
-  max-width:520px; margin-bottom:22px;
-}
-.hero-sub strong { color:var(--blanc); }
-.hero-ctas { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:52px; }
+.hero-ctas { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
 .btn-primary {
   background:var(--rouge); color:var(--blanc);
-  padding:11px 24px; border-radius:50px;
-  font-weight:700; font-size:13.5px;
+  padding:13px 28px; border-radius:50px;
+  font-weight:700; font-size:14px;
   box-shadow:0 6px 20px rgba(230,48,39,0.45);
   transition:transform .2s;
   display:inline-block;
@@ -150,22 +165,40 @@ nav a:hover { opacity:1; color:var(--bleu); }
 .btn-primary:hover { transform:translateY(-2px); }
 .btn-outline {
   background:transparent; color:var(--blanc);
-  padding:11px 24px; border-radius:50px;
-  font-weight:600; font-size:13.5px; display:inline-block;
+  padding:13px 28px; border-radius:50px;
+  font-weight:600; font-size:14px; display:inline-block;
   border:1.5px solid rgba(255,255,255,0.3);
   transition:border-color .2s;
 }
 .btn-outline:hover { border-color:var(--blanc); }
 
+/* Zone bas du hero — stats + chips */
+.hero-bottom {
+  position:relative; z-index:2;
+  padding:0 var(--pad) 40px;
+  display:flex; flex-direction:column; gap:18px;
+}
+
 /* Stats hero */
-.hero-stats { display:flex; gap:36px; flex-wrap:wrap; margin-bottom:40px; }
-.hero-stats .stat .n { font-size:28px; font-weight:900; color:var(--blanc); }
+.hero-stats {
+  display:flex; gap:0; flex-wrap:wrap;
+  justify-content:space-between;
+  border-top:1px solid rgba(255,255,255,.12);
+  padding-top:24px;
+}
+.hero-stats .stat { flex:1; min-width:120px; text-align:center; }
+.hero-stats .stat .n { font-size:30px; font-weight:900; color:var(--blanc); }
 .hero-stats .stat .n em { font-style:normal; color:var(--jaune); }
-.hero-stats .stat .l { font-size:12px; color:rgba(255,255,255,.5); margin-top:3px; line-height:1.4; }
+.hero-stats .stat .l { font-size:12px; color:rgba(255,255,255,.5); margin-top:4px; line-height:1.4; }
 
 /* Chips INSEE */
-.hero-chips { display:flex; gap:12px; flex-wrap:wrap; position:relative; z-index:2; padding-bottom:60px; }
+.hero-chips {
+  display:flex; gap:12px; flex-wrap:wrap;
+  position:relative; z-index:2;
+  justify-content:space-between;
+}
 .chip {
+  flex:1; min-width:160px;
   background:rgba(255,255,255,0.08);
   border:1px solid rgba(255,255,255,0.12);
   backdrop-filter:blur(6px);
@@ -174,7 +207,7 @@ nav a:hover { opacity:1; color:var(--bleu); }
 }
 .chip .cn { font-size:22px; font-weight:900; color:var(--rouge); }
 .chip .cl { font-size:11.5px; color:rgba(255,255,255,.6); line-height:1.4; }
-.chip.good .cn { color:var(--vert); }
+.chip.good .cn { color:var(--rouge); }
 
 /* ═══ SECTION BASE ═══ */
 section { padding:96px var(--pad); position:relative; }
@@ -707,13 +740,15 @@ nav.open { display:flex !important; }
   }
   nav a { font-size:20px; opacity:1; }
   .btn-nav { font-size:16px; padding:14px 32px; }
-  .hero { min-height:auto; padding:100px 18px 50px; }
-  .hero-content { max-width:100%; }
+  .hero { min-height:100svh; }
+  .hero-title-zone { padding:20px 18px 0; }
+  .hero-bottom { padding:0 14px 28px; }
   h1 { font-size:clamp(24px,7vw,40px) !important; }
-  .hero-pre { font-size:9px; }
-  .hero-stats { gap:12px; flex-wrap:wrap; }
+  .hero-pre { font-size:9px; letter-spacing:.8px; }
+  .hero-stats { gap:0; justify-content:space-around; }
+  .hero-stats .stat { text-align:center; }
   .hero-chips { flex-wrap:wrap; gap:10px; }
-  .chip { min-width:140px; }
+  .chip { min-width:calc(50% - 6px); flex:none; }
   .section-inner { padding:0 !important; }
   h2 { font-size:clamp(20px,5vw,32px) !important; }
   .footer-inner { grid-template-columns:1fr !important; gap:24px; }
@@ -785,6 +820,17 @@ nav.open { display:flex !important; }
   .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   table { min-width: 500px; }
 }
+
+@media(max-width:760px){
+  .nav-dropdown{flex-direction:column;align-items:flex-start;width:100%;}
+  .nav-dropdown::after{display:none;}
+  .nav-dropdown-link{font-size:16px;padding:10px 0;width:100%;border-bottom:1px solid rgba(0,0,0,.05);opacity:1;}
+    .nav-submenu{position:static;transform:none;box-shadow:none;border:none;opacity:1;visibility:visible;pointer-events:all;padding:0;min-width:unset;width:100%;display:none;background:transparent;}
+  .nav-dropdown.mob-open .nav-submenu{display:flex;flex-direction:column;}
+  .nav-submenu a{padding:9px 0 9px 16px;font-size:15px;border-bottom:1px solid rgba(0,0,0,.04);border-radius:0;}
+  .nav-dropdown:hover .nav-submenu{opacity:1;visibility:visible;transform:none;}
+}
+
 </style>
 </head>
 <body>
@@ -794,36 +840,47 @@ nav.open { display:flex !important; }
   <div class="header-logo">
     <a href="index.html"><img src="assets/logo-header.png" alt="SCOP ORYGIN"></a>
   </div>
-  <nav><a href="index.html" style="color:var(--rouge);opacity:1;font-weight:800">Accueil</a><a href="concept.html">Qui sommes&#8209;nous&nbsp;?</a><a href="poles.html">Nos pôles</a><a href="parcours.html">Nos parcours</a><a href="formation.html">Formations</a><a href="edpg.html">EDPG</a><a href="sites.html">Nos sites</a><a href="contact.html">Contact</a></nav>
+  <nav><a href="index.html" style="color:var(--rouge);opacity:1;font-weight:800">Accueil</a><a href="concept.html">Qui sommes&#8209;nous&nbsp;?</a><a href="poles.html">Nos pôles</a><a href="parcours.html">Nos parcours</a>    <div class="nav-dropdown" id="nav-dd">
+      <a href="formation.html" class="nav-dropdown-link" id="nav-dd-btn">
+        Formations
+        <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+      <div class="nav-submenu" role="menu">
+        <a href="certifications-orygin.html" role="menuitem"><span class="sub-dot" style="background:var(--rouge)"></span>Certifications ORYGIN</a>
+        <a href="formations-qualifiantes.html" role="menuitem"><span class="sub-dot" style="background:var(--bleu)"></span>Formations qualifiantes</a>
+        <a href="edpg.html" role="menuitem"><span class="sub-dot" style="background:var(--vert)"></span>EDPG</a>
+      </div>
+    </div><a href="sites.html">Nos sites</a><a href="contact.html">Contact</a></nav>
   <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
   <a href="contact.html" class="btn-nav">Nous contacter</a>
 </header>
+
 <!-- HERO -->
 <section class="hero" id="accueil">
   <div class="hero-bg"></div>
   <div class="hero-grid-veil"></div>
 
-  <!-- Élément graphique déco hero -->
-  <div class="deco deco-r" style="top:40px;width:220px;opacity:0.18;">
-    <img src="assets/el-03-transmission.png" alt="">
-  </div>
-  <div class="hero-content reveal">
+  <!-- Titre centré, grand, en haut de la photo -->
+  <div class="hero-title-zone reveal">
     <div class="hero-pre">
       <span class="dot"></span>
-      GUYANE FRANÇAISE — SCOP ORYGIN
+      GUYANE FRANÇAISE · COMPLEXE MULTIMODAL · SCOP ORYGIN
     </div>
-    <h1>Développement économique<br>par l'insertion et<br>l'accompagnement</h1>
+    <h1>Développement économique<br>par l'insertion et l'accompagnement</h1>
     <p class="hero-tagline">Un mouvement. Des parcours. Des possibilités infinies.</p>
-    <div class="hero-stats">
+  </div>
+
+  <!-- Stats + chips en bas de la photo -->
+  <div class="hero-bottom">
+    <div class="hero-stats anim-up d1">
       <div class="stat"><div class="n">3 <em>sites</em></div><div class="l">En développement<br>sur le territoire</div></div>
       <div class="stat"><div class="n">3 <em>pôles</em></div><div class="l">Insertion · Formation<br>Ingénierie</div></div>
       <div class="stat"><div class="n">∞</div><div class="l">Possibilités<br>d'avenir</div></div>
     </div>
-  </div>
-  <div class="hero-chips anim-up d3 s2">
-    <div class="chip anim-scale card-hover"><div class="cn" data-target="17" data-suffix="%">0%</div><div class="cl">de chômage<br>en Guyane</div></div>
-    <div class="chip anim-scale card-hover"><div class="cn" data-target="34" data-suffix="%">0%</div><div class="cl">des jeunes 15-29 ans<br>sans emploi ni formation</div></div>
-    <div class="chip anim-scale card-hover"><div class="cn" data-target="42" data-suffix="%">0%</div><div class="cl">taux d'emploi global<br>vs 69% en métropole</div></div>
+    <div class="hero-chips anim-up d2">
+      <div class="chip card-hover"><div class="cn" data-target="17" data-suffix="%">0%</div><div class="cl">de chômage<br>en Guyane</div></div>
+      <div class="chip card-hover"><div class="cn" data-target="34" data-suffix="%">0%</div><div class="cl">des jeunes 15-29 ans<br>sans emploi ni formation</div></div>
+      <div class="chip good card-hover"><div class="cn" data-target="42" data-suffix="%">0%</div><div class="cl">taux d'emploi global<br>vs 69% en métropole</div></div>
     </div>
   </div>
 </section>
@@ -844,7 +901,7 @@ nav.open { display:flex !important; }
     <div class="chiffres-grid">
       <div class="chiffre-card reveal">
         <span class="chiffre-nb">+200</span>
-        <span class="chiffre-label">bénéficiaires accompagnés</span>
+        <span class="chiffre-label">Objectif : bénéficiaires accompagnés</span>
       </div>
       <div class="chiffre-card reveal s2">
         <span class="chiffre-nb">5</span>
@@ -854,9 +911,8 @@ nav.open { display:flex !important; }
         <span class="chiffre-nb">3</span>
         <span class="chiffre-label">sites en Guyane</span>
       </div>
-      <div class="chiffre-card reveal s4">
-        <span class="chiffre-nb">1ère</span>
-        <span class="chiffre-label">SCOP de développement économique en Guyane</span>
+      <div class="chiffre-card reveal s4" style="display:flex;align-items:center;justify-content:center;flex-direction:column;">
+        <span class="chiffre-label" style="font-size:1rem;font-weight:800;color:var(--navy);margin-top:0;">SCOP de développement économique en Guyane</span>
       </div>
     </div>
   </div>
@@ -1032,9 +1088,26 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   if (chips) counterObs.observe(chips);
 })();
 
+
+/* ─── DROPDOWN MOBILE ─── */
+(function(){
+  var dd=document.getElementById('nav-dd');
+  var ddBtn=document.getElementById('nav-dd-btn');
+  if(!dd||!ddBtn)return;
+  ddBtn.addEventListener('click',function(e){
+    if(window.innerWidth<=760){
+      e.stopPropagation();
+      dd.classList.toggle('mob-open');
+      ddBtn.setAttribute('aria-expanded',dd.classList.contains('mob-open'));
+    }
+  });
+  document.addEventListener('click',function(e){if(!dd.contains(e.target))dd.classList.remove('mob-open');});
+})();
+
 </script>
 
 <script>
+/* ── HAMBURGER MENU MOBILE ── */
 (function(){
   var btn = document.getElementById('burger');
   var nav = document.querySelector('nav');
@@ -1052,6 +1125,8 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     });
   });
 })();
+
 </script>
+<script src="assets/cookies.js" defer></script>
 </body>
 </html>

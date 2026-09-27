@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certifications ORYGIN — SCOP ORYGIN</title>
+<style>
+:root {
+  --rouge:#E63027; --jaune:#F5C400; --bleu:#0076BE; --vert:#2E8B4A;
+  --navy:#0D1B2A; --gris:#F0F2F5; --blanc:#FFFFFF; --texte:#1A2530; --subtil:#6B7685;
+  --radius:18px; --gap:clamp(16px,3vw,32px); --pad:clamp(20px,5vw,80px);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:Arial,Helvetica,sans-serif;color:var(--texte);background:var(--blanc);overflow-x:hidden;}
+img{max-width:100%;height:auto;display:block;}
+a{color:inherit;text-decoration:none;}
+
+.stripe{height:4px;display:flex;}
+.stripe span{flex:1;}
+
+header{
+  position:sticky;top:0;z-index:200;
+  background:var(--blanc);border-bottom:1px solid rgba(0,0,0,.08);
+  padding:14px var(--pad);
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+}
+.header-logo img{height:56px;width:auto;}
+
+nav{display:flex;gap:22px;align-items:center;flex-wrap:wrap;}
+nav a{font-size:14px;font-weight:600;color:var(--navy);opacity:.7;transition:opacity .2s,color .2s;white-space:nowrap;}
+nav a:hover{opacity:1;color:var(--bleu);}
+
+/* ─── DROPDOWN ─── */
+.nav-dropdown{position:relative;display:flex;align-items:center;}
+.nav-dropdown-link{
+  font-size:14px;font-weight:600;color:var(--navy);opacity:.7;
+  display:flex;align-items:center;gap:5px;white-space:nowrap;
+  transition:opacity .2s,color .2s;cursor:pointer;
+}
+.nav-dropdown-link svg{width:12px;height:12px;transition:transform .2s;}
+.nav-dropdown:hover .nav-dropdown-link{opacity:1;color:var(--bleu);}
+.nav-dropdown:hover .nav-dropdown-link svg{transform:rotate(180deg);}
+
+/* pont invisible pour combler l'espace entre le lien et le sous-menu */
+.nav-dropdown::after{
+  content:'';position:absolute;top:100%;left:0;right:0;height:16px;
+}
+.nav-submenu{
+  position:absolute;top:calc(100% + 16px);left:50%;
+  transform:translateX(-50%) translateY(-4px);
+  background:var(--blanc);border-radius:14px;
+  box-shadow:0 8px 32px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.07);
+  min-width:220px;padding:8px;z-index:300;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .18s ease,transform .18s ease;
+}
+.nav-dropdown:hover .nav-submenu{
+  opacity:1;visibility:visible;pointer-events:all;
+  transform:translateX(-50%) translateY(0);
+}
+.nav-submenu a{
+  display:block;padding:10px 14px;border-radius:10px;
+  font-size:13.5px;font-weight:600;color:var(--navy);opacity:1;
+  transition:background .15s;
+}
+.nav-submenu a:hover{background:var(--gris);color:var(--bleu);}
+.sub-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:8px;vertical-align:middle;margin-bottom:1px;}
+
+.active-page{color:var(--rouge)!important;opacity:1!important;font-weight:800!important;}
+.btn-nav{
+  background:var(--rouge);color:var(--blanc);padding:10px 22px;border-radius:50px;
+  font-size:14px;font-weight:700;box-shadow:0 3px 12px rgba(230,48,39,.35);
+  transition:transform .2s,box-shadow .2s;white-space:nowrap;
+}
+.btn-nav:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(230,48,39,.45);}
+
+#burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+#burger span{display:block;width:26px;height:2px;background:var(--navy);border-radius:2px;transition:transform .3s,opacity .3s;}
+#burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+#burger.open span:nth-child(2){opacity:0;}
+#burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* HERO */
+.hero{position:relative;min-height:54vh;display:flex;flex-direction:column;justify-content:center;padding:80px var(--pad) 60px;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:url('assets/hero-bg.jpg') center/cover no-repeat;filter:brightness(.3);z-index:0;}
+.hero-grid-veil{position:absolute;inset:0;z-index:1;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:52px 52px;}
+.hero-content{position:relative;z-index:2;max-width:680px;}
+.hero-pre{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.9);font-size:10px;font-weight:700;letter-spacing:1px;padding:5px 14px;border-radius:50px;margin-bottom:16px;}
+.hero-pre .dot{width:7px;height:7px;border-radius:50%;background:var(--rouge);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
+.hero h1{font-size:clamp(28px,4vw,48px);font-weight:900;line-height:1.06;color:var(--blanc);letter-spacing:-1px;margin-bottom:12px;}
+.hero-sub{font-size:clamp(13px,1.6vw,16px);line-height:1.65;color:rgba(255,255,255,.72);max-width:540px;margin-top:14px;}
+.hero-notice{margin-top:20px;display:inline-block;background:rgba(230,48,39,.18);border:1px solid rgba(230,48,39,.35);border-radius:10px;padding:12px 18px;font-size:13px;color:rgba(255,255,255,.88);line-height:1.6;max-width:560px;}
+
+/* SECTIONS */
+section{padding:80px var(--pad);position:relative;}
+.ey{font-size:11.5px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--rouge);margin-bottom:14px;display:block;}
+
+/* FICHE */
+.fiche-section{overflow:hidden;}
+.fiche-section:nth-child(odd){background:var(--blanc);}
+.fiche-section:nth-child(even){background:var(--gris);}
+.fiche-header{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:36px;}
+.fiche-cat-badge{display:inline-block;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:50px;margin-bottom:12px;background:rgba(230,48,39,.1);color:var(--rouge);}
+.fiche-title{font-size:clamp(22px,3vw,32px);font-weight:900;color:var(--navy);margin-bottom:8px;}
+.fiche-subtitle{font-size:15px;color:var(--subtil);line-height:1.6;max-width:540px;}
+.fiche-meta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:32px;}
+.fiche-meta-item{background:var(--blanc);border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:10px 16px;display:flex;flex-direction:column;gap:3px;min-width:120px;}
+.fiche-section:nth-child(even) .fiche-meta-item{background:var(--blanc);}
+.fiche-meta-label{font-size:9.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--subtil);}
+.fiche-meta-value{font-size:14px;font-weight:700;color:var(--navy);}
+.fiche-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.fiche-block{background:var(--blanc);border-radius:16px;padding:24px;border-left:3px solid var(--rouge);}
+.fiche-section:nth-child(even) .fiche-block{background:rgba(255,255,255,.8);}
+.fiche-block h4{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:14px;}
+.fiche-block ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.fiche-block li{font-size:13px;color:var(--subtil);line-height:1.6;padding-left:16px;position:relative;}
+.fiche-block li::before{content:'';position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--rouge);}
+.fiche-block p{font-size:13px;color:var(--subtil);line-height:1.7;}
+.fiche-cta{margin-top:28px;padding:22px 28px;background:var(--navy);border-radius:16px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.fiche-cta p{color:rgba(255,255,255,.75);font-size:14px;line-height:1.6;}
+.fiche-cta p strong{color:var(--blanc);}
+.fiche-btn{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;padding:12px 24px;border-radius:50px;background:var(--rouge);color:var(--blanc);box-shadow:0 4px 16px rgba(230,48,39,.4);white-space:nowrap;transition:transform .2s;}
+.fiche-btn:hover{transform:translateY(-2px);}
+
+/* CTA final */
+.cta-final{background:var(--rouge);text-align:center;padding:80px var(--pad);}
+.cta-final h2{color:var(--blanc);font-size:clamp(24px,3.5vw,36px);font-weight:900;margin-bottom:14px;}
+.cta-final p{color:rgba(255,255,255,.85);font-size:16px;margin-bottom:28px;}
+.btn-white{background:var(--blanc);color:var(--rouge);padding:14px 32px;border-radius:50px;font-weight:700;font-size:15px;display:inline-block;transition:transform .2s;}
+.btn-white:hover{transform:translateY(-2px);}
+
+/* FOOTER */
+footer{background:var(--navy);padding:48px var(--pad) 22px;}
+.footer-inner{display:grid;grid-template-columns:1.6fr 1fr 1fr auto;gap:44px;margin-bottom:34px;align-items:start;}
+.footer-tag{font-size:13px;color:rgba(255,255,255,.45);line-height:1.7;max-width:250px;margin-bottom:8px;}
+footer h5{color:var(--blanc);font-size:13.5px;font-weight:700;margin-bottom:14px;}
+footer a,footer .fl-t{color:rgba(255,255,255,.5);text-decoration:none;display:block;font-size:13px;margin-bottom:8px;line-height:1.6;}
+footer a:hover{color:var(--jaune);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:18px;display:flex;justify-content:space-between;font-size:11.5px;color:rgba(255,255,255,.28);flex-wrap:wrap;gap:8px;}
+
+/* ANCHOR OFFSET */
+.anchor-offset{scroll-margin-top:90px;}
+
+/* RESPONSIVE */
+@media(max-width:900px){.fiche-grid{grid-template-columns:1fr;}.footer-inner{grid-template-columns:1fr 1fr;}}
+@media(max-width:760px){
+  #burger{display:flex;}
+  nav{display:none;flex-direction:column;align-items:flex-start;gap:4px;position:absolute;top:100%;left:0;right:0;background:var(--blanc);padding:20px var(--pad) 28px;border-bottom:1px solid rgba(0,0,0,.07);box-shadow:0 8px 24px rgba(0,0,0,.08);}
+  nav.open{display:flex;}
+  nav a{opacity:1;padding:10px 0;width:100%;border-bottom:1px solid rgba(0,0,0,.05);font-size:16px;}
+  .btn-nav{margin-top:12px;text-align:center;width:100%;}
+  .nav-dropdown{flex-direction:column;align-items:flex-start;width:100%;}
+  .nav-dropdown::after{display:none;}
+  .nav-dropdown-link{font-size:16px;padding:10px 0;width:100%;border-bottom:1px solid rgba(0,0,0,.05);opacity:1;}
+  .nav-submenu{position:static;transform:none;box-shadow:none;border:none;opacity:1;visibility:visible;pointer-events:all;padding:0;min-width:unset;width:100%;display:none;background:transparent;}
+  .nav-dropdown.mob-open .nav-submenu{display:flex;flex-direction:column;}
+  .nav-submenu a{padding:9px 0 9px 16px;font-size:15px;border-bottom:1px solid rgba(0,0,0,.04);border-radius:0;}
+  .nav-dropdown:hover .nav-submenu{opacity:1;visibility:visible;transform:none;}
+  header{position:relative;}
+  .fiche-header{flex-direction:column;}
+  .fiche-cta{flex-direction:column;}
+  .footer-inner{grid-template-columns:1fr;}
+  section{padding:60px var(--pad);}
+}
+</style>
+</head>
+<body>
+
+<div class="stripe"><span style="background:var(--rouge)"></span><span style="background:var(--jaune)"></span><span style="background:var(--bleu)"></span><span style="background:var(--vert)"></span></div>
+
+<header>
+  <a class="header-logo" href="index.html">
+    <img src="assets/logo-header.png" alt="SCOP ORYGIN">
+  </a>
+  <button id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <nav>
+    <a href="index.html">Accueil</a>
+    <a href="concept.html">Qui sommes&#8209;nous&nbsp;?</a>
+    <a href="poles.html">Nos pôles</a>
+    <a href="parcours.html">Nos parcours</a>
+    <div class="nav-dropdown" id="nav-dd">
+      <a href="formation.html" class="nav-dropdown-link" id="nav-dd-btn">
+        Formations
+        <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+      <div class="nav-submenu" role="menu">
+        <a href="certifications-orygin.html" role="menuitem" class="active-page"><span class="sub-dot" style="background:var(--rouge)"></span>Certifications ORYGIN</a>
+        <a href="formations-qualifiantes.html" role="menuitem"><span class="sub-dot" style="background:var(--bleu)"></span>Formations qualifiantes</a>
+        <a href="edpg.html" role="menuitem"><span class="sub-dot" style="background:var(--vert)"></span>EDPG</a>
+      </div>
+    </div>
+    <a href="sites.html">Nos sites</a>
+    <a href="contact.html" class="btn-nav">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-veil"></div>
+  <div class="hero-content">
+    <p class="hero-pre"><span class="dot"></span>Certifications ORYGIN</p>
+    <h1>Des certifications pensées<br>pour le territoire guyanais</h1>
+    <p class="hero-sub">4 certifications propres à ORYGIN Kampus, reconnues dans notre réseau de partenaires. Elles valident des compétences opérationnelles concrètes, adaptées aux besoins spécifiques de la Guyane.</p>
+    <p class="hero-notice">Ces certifications sont propres à ORYGIN Kampus. Elles ne sont pas des certifications RNCP, mais valident des compétences reconnues par notre réseau de partenaires territoriaux.</p>
+  </div>
+</section>
+
+<!-- FICHE 1 — RCG -->
+<section class="fiche-section anchor-offset" id="rcg" style="background:var(--blanc);">
+  <div>
+    <div class="fiche-header">
+      <div>
+        <span class="fiche-cat-badge">Certification ORYGIN</span>
+        <h2 class="fiche-title">Responsable coordination de parcours global</h2>
+        <p class="fiche-subtitle">Former des professionnels capables de coordonner des projets complexes, de gérer des équipes pluridisciplinaires et de piloter des actions à fort impact territorial en Guyane.</p>
+      </div>
+    </div>
+    <div class="fiche-meta">
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Durée</span><span class="fiche-meta-value">462h / 1 an</span></div>
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Niveau</span><span class="fiche-meta-value">Certification ORYGIN</span></div>
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Format</span><span class="fiche-meta-value">Présentiel + distanciel</span></div>
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Première session</span><span class="fiche-meta-value">2 nov. 2026</span></div>
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Tarif</span><span class="fiche-meta-value">Nous contacter</span></div>
+    </div>
+    <div class="fiche-grid">
+      <div class="fiche-block">
+        <h4>Bloc 1 — Posture humaine &amp; santé psychique (70h)</h4>
+        <ul>
+          <li>Écoute active et relation d'aide aux publics vulnérables</li>
+          <li>Attestation <strong>Premiers Secours en Santé Mentale (PSSM)</strong></li>
+          <li>Accompagnement psychologique : trauma, exil, plurilinguisme</li>
+          <li>Orienter sans diagnostiquer — travailler avec un psychologue</li>
+        </ul>
+      </div>
+      <div class="fiche-block">
+        <h4>Bloc 2 — Interculturalité &amp; médiation (56h)</h4>
+        <ul>
+          <li>Mosaïque guyanaise : peuples, langues, traditions</li>
+          <li>Médiation interculturelle et interprétariat</li>
+          <li>Spécificités des communes du fleuve et des communautés autochtones</li>
+        </ul>
+      </div>
+      <div class="fiche-block">
+        <h4>Bloc 3 — Coordination de parcours global (84h)</h4>
+        <ul>
+          <li>Diagnostic global de situation, identification des freins périphériques</li>
+          <li>Écosystème guyanais des acteurs de l'insertion et du social</li>
+          <li>Élaboration du plan d'action et coordination multi-acteurs</li>
+        </ul>
+      </div>
+      <div class="fiche-block">
+        <h4>Bloc 4 — Coordination pédagogique &amp; animation d'équipe (63h)</h4>
+        <ul>
+          <li>Ingénierie inclusive : FALC, AFEST, publics allophones</li>
+          <li>Animation d'une équipe de formateurs ou de référents</li>
+          <li>Démarche qualité Qualiopi et amélioration continue</li>
+        </ul>
+      </div>
+      <div class="fiche-block">
+        <h4>Bloc 5 — Territoire &amp; innovation sociale (56h)</h4>
+        <ul>
+          <li>Analyse des besoins sociaux du territoire</li>
+          <li>Conception et conduite d'un projet d'innovation sociale</li>
+          <li>Du repérage à la soutenance devant un jury territorial</li>
+        </ul>
+      </div>
+      <div class="fiche-block">
+        <h4>Débouchés</h4>
+        <ul>
+          <li>Responsable de coordination de parcours d'insertion</li>
+          <li>Chef de projet territorial ou référent de secteur</li>
+          <li>Chargé de mission en structure associative, ESS ou publique</li>
+          <li>Manager intermédiaire en structure d'accueil ou d'accompagnement</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fiche-cta">
+      <p><strong>Première session : 2 novembre 2026.</strong> Entretien de positionnement obligatoire. Places limitées.</p>
+      <a href="contact.html" class="fiche-btn">Candidater</a>
+    </div>
+  </div>
+</section>
+
+<!-- FICHE 2 — Assistant juridique -->
+<section class="fiche-section anchor-offset" id="assistant-juridique" style="background:var(--gris);">
+  <div>
+    <div class="fiche-header">
+      <div>
+        <span class="fiche-cat-badge">Certification ORYGIN</span>
+        <h2 class="fiche-title">Assistant Juridique</h2>
+        <p class="fiche-subtitle">Acquérir les compétences essentielles pour assister des professionnels du droit et des structures dans leurs démarches juridiques et administratives en Guyane.</p>
+      </div>
+    </div>
+    <div class="fiche-meta">
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Durée</span><span class="fiche-meta-value">651h / 12 mois</span></div>
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Niveau</span><span class="fiche-meta-value">Certification ORYGIN</span></div>
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Format</span><span class="fiche-meta-value">Présentiel + distanciel</span></div>
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Première session</span><span class="fiche-meta-value">9 nov. 2026</span></div>
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Tarif</span><span class="fiche-meta-value">Nous contacter</span></div>
+    </div>
+    <div class="fiche-grid">
+      <div class="fiche-block">
+        <h4>Public cible</h4>
+        <ul>
+          <li>Demandeurs d'emploi souhaitant accéder au secteur juridique</li>
+          <li>Secrétaires ou assistants administratifs en reconversion</li>
+          <li>Agents de collectivités souhaitant renforcer leurs compétences juridiques</li>
+          <li>Toute personne motivée par le droit et les démarches légales</li>
+        </ul>
+      </div>
+      <div class="fiche-block">
+        <h4>Objectifs pédagogiques</h4>
+        <ul>
+          <li>Maîtriser les bases du droit civil, commercial et du travail</li>
+          <li>Rédiger des actes et correspondances juridiques courants</li>
+          <li>Classer et gérer des dossiers juridiques et contentieux</li>
+          <li>Effectuer des recherches documentaires juridiques</li>
+          <li>Assurer l'accueil et l'orientation des justiciables</li>
+        </ul>
+      </div>
+      <div class="fiche-block">
+        <h4>Contenus</h4>
+        <ul>
+          <li>Introduction au droit et aux institutions judiciaires</li>
+          <li>Droit civil et droit de la famille</li>
+          <li>Droit du travail et droit social</li>
+          <li>Rédaction juridique et correspondance officielle</li>
+          <li>Gestion des délais légaux et procédures</li>
+          <li>Outils bureautiques et gestion de dossiers numériques</li>
+        </ul>
+      </div>
+      <div class="fiche-block">
+        <h4>Débouchés</h4>
+        <ul>
+          <li>Assistant juridique en cabinet d'avocat</li>
+          <li>Secrétaire juridique en entreprise</li>
+          <li>Agent administratif en juridiction ou collectivité</li>
+          <li>Collaborateur en office notarial ou huissier</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fiche-cta">
+      <p><strong>Renseignements et inscriptions.</strong> Entretien de motivation préalable — accessibilité selon profil.</p>
+      <a href="contact.html" class="fiche-btn">Candidater</a>
+    </div>
+  </div>
+</section>
+
+<!-- FICHE 3 — CPCAT -->
+<section class="fiche-section anchor-offset" id="cpcat" style="background:var(--blanc);">
+  <div>
+    <div class="fiche-header">
+      <div>
+        <span class="fiche-cat-badge">Certification ORYGIN</span>
+        <h2 class="fiche-title">Concepteur de Projets Culturels et Artistiques Territoriaux</h2>
+        <p class="fiche-subtitle">Valoriser et promouvoir les cultures, arts et savoirs traditionnels guyanais dans une démarche professionnelle et entrepreneuriale ancrée dans le territoire.</p>
+      </div>
+    </div>
+    <div class="fiche-meta">
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Durée</span><span class="fiche-meta-value">469h / 1 an</span></div>
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Niveau</span><span class="fiche-meta-value">Certification ORYGIN</span></div>
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Format</span><span class="fiche-meta-value">Présentiel + distanciel</span></div>
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Première session</span><span class="fiche-meta-value">2 nov. 2026</span></div>
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Tarif</span><span class="fiche-meta-value">Nous contacter</span></div>
+    </div>
+    <div class="fiche-grid">
+      <div class="fiche-block">
+        <h4>Bloc 1 — Fondamentaux culturels &amp; territoriaux (63h)</h4>
+        <ul>
+          <li>Politiques culturelles locales, nationales et européennes</li>
+          <li>Dynamiques culturelles en Guyane : acteurs, réseaux, financements</li>
+          <li>Cartographie des acteurs du territoire</li>
+        </ul>
+      </div>
+      <div class="fiche-block">
+        <h4>Bloc 2 — Direction artistique &amp; Création (84h)</h4>
+        <ul>
+          <li>Esthétiques contemporaines et processus de création</li>
+          <li>Idéation, conception artistique et itérations créatives</li>
+          <li>Médiation culturelle : relier artistes, œuvres et publics</li>
+        </ul>
+      </div>
+      <div class="fiche-block">
+        <h4>Bloc 3 — Production &amp; Coordination (56h)</h4>
+        <ul>
+          <li>Production événementielle : rétroplanning, logistique, sécurité</li>
+          <li>Coordination d'équipes artistiques et de prestataires</li>
+          <li>Gestion des droits et obligations contractuelles</li>
+        </ul>
+      </div>
+      <div class="fiche-block">
+        <h4>Bloc 4 — Économie &amp; Gestion de projet (98h)</h4>
+        <ul>
+          <li>Montage budgétaire et recherche de financements publics/privés</li>
+          <li>Droits d'auteur, propriété intellectuelle et contrats</li>
+          <li>Évaluation d'impact culturel et restitution</li>
+        </ul>
+      </div>
+      <div class="fiche-block">
+        <h4>Bloc 5 — Projet fil rouge &amp; Certification (168h)</h4>
+        <ul>
+          <li>Projet culturel personnel : diagnostic territorial → conception → pilotage</li>
+          <li><strong>Résidence artistique au Carbet</strong> — création en situation réelle</li>
+          <li>Soutenance devant un jury professionnel</li>
+        </ul>
+      </div>
+      <div class="fiche-block">
+        <h4>Débouchés</h4>
+        <ul>
+          <li>Directeur ou chargé de projet culturel</li>
+          <li>Médiateur culturel en institution ou association</li>
+          <li>Coordinateur de production événementielle</li>
+          <li>Entrepreneur dans le secteur des arts et de la culture</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fiche-cta">
+      <p><strong>Première session : 2 novembre 2026.</strong> Renseignements et candidatures — nous consulter.</p>
+      <a href="contact.html" class="fiche-btn">Candidater</a>
+    </div>
+  </div>
+</section>
+
+<!-- FICHE 4 — Artisan d'art -->
+<section class="fiche-section anchor-offset" id="artisan-art" style="background:var(--gris);">
+  <div>
+    <div class="fiche-header">
+      <div>
+        <span class="fiche-cat-badge">Certification ORYGIN</span>
+        <h2 class="fiche-title">Artisan d'art des savoir-faire traditionnels</h2>
+        <p class="fiche-subtitle">Acquérir et professionnaliser les techniques artisanales traditionnelles guyanaises pour créer une activité économique durable et valoriser les savoir-faire du territoire. <em>Coloration Guyane — perlerie amérindienne &amp; bijouterie traditionnelle en or.</em></p>
+      </div>
+    </div>
+    <div class="fiche-meta">
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Durée</span><span class="fiche-meta-value">12 mois</span></div>
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Niveau</span><span class="fiche-meta-value">Certification ORYGIN</span></div>
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Spécialités</span><span class="fiche-meta-value">Deux spécialités : perlerie amérindienne &amp; bijouterie traditionnelle en or</span></div>
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Format</span><span class="fiche-meta-value">Présentiel + distanciel</span></div>
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Ouverture</span><span class="fiche-meta-value">Prochainement</span></div>
+      <div class="fiche-meta-item"><span class="fiche-meta-label">Tarif</span><span class="fiche-meta-value">Nous contacter</span></div>
+    </div>
+    <div class="fiche-grid">
+      <div class="fiche-block">
+        <h4>Bloc 1 — Accueil &amp; socle (35h)</h4>
+        <ul>
+          <li>Positionnement et évaluation des savoir-faire d'entrée</li>
+          <li>Sécurité en atelier et manipulation des matériaux</li>
+          <li>Histoire de l'artisanat guyanais et contexte patrimonial</li>
+        </ul>
+      </div>
+      <div class="fiche-block">
+        <h4>Bloc 2 — Culture, transmission &amp; création (70h)</h4>
+        <ul>
+          <li>Symbolique des objets et valeurs culturelles associées</li>
+          <li>Rencontres avec les communautés détentrices des savoir-faire</li>
+          <li>Conception d'une pièce originale à partir d'un cahier des charges</li>
+        </ul>
+      </div>
+      <div class="fiche-block">
+        <h4>Bloc 3 — Atelier technique (210h)</h4>
+        <ul>
+          <li><strong>Spécialité perlerie amérindienne</strong> — techniques ancestrales avec maîtres artisans</li>
+          <li><strong>Spécialité bijouterie traditionnelle en or</strong> — travail du métal précieux local</li>
+          <li>Maîtrise des gestes, finitions et contrôle qualité</li>
+        </ul>
+      </div>
+      <div class="fiche-block">
+        <h4>Bloc 4 — Structurer son activité (70h)</h4>
+        <ul>
+          <li>Statuts juridiques et démarches d'immatriculation artisanale</li>
+          <li>Calcul du prix de revient et politique tarifaire</li>
+          <li>Réglementation des métaux précieux et traçabilité de l'or</li>
+        </ul>
+      </div>
+      <div class="fiche-block">
+        <h4>Bloc 5 — Vendre, médier &amp; valoriser (70h)</h4>
+        <ul>
+          <li>Vente en ligne et e-commerce des créations artisanales</li>
+          <li>Storytelling et communication autour du savoir-faire</li>
+          <li>Médiation culturelle et label Patrimoine Culturel Immatériel de Guyane (PCI-G)</li>
+        </ul>
+      </div>
+      <div class="fiche-block">
+        <h4>Bloc 6 — Projet collectif &amp; certification (35h)</h4>
+        <ul>
+          <li>Commande réelle intercommunautaire — réalisation collective</li>
+          <li>Soutenance devant un jury incluant maîtres artisans et partenaires</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fiche-cta">
+      <p><strong>Ouverture prochainement.</strong> Renseignements et pré-inscriptions — nous contacter.</p>
+      <a href="contact.html" class="fiche-btn">Nous contacter</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <h2>Candidater à une certification</h2>
+  <p>Entretien de motivation, positionnement et orientation personnalisée — sur rendez-vous à Cayenne ou à distance.</p>
+  <a href="contact.html" class="btn-white">Prendre contact</a>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p style="font-size:16px;font-weight:900;color:var(--blanc);margin-bottom:10px;">SCOP ORYGIN</p>
+      <p class="footer-tag">SCOP guyanaise dédiée au développement économique par l'insertion, l'accompagnement et la formation.</p>
+      <p style="font-size:11px;color:rgba(255,255,255,.25);margin-top:6px;">SIREN 101 927 366 000 19</p>
+    </div>
+    <div>
+      <h5>Navigation</h5>
+      <a href="index.html">Accueil</a>
+      <a href="concept.html">Qui sommes&#8209;nous&nbsp;?</a>
+      <a href="poles.html">Nos pôles</a>
+      <a href="parcours.html">Nos parcours</a>
+      <a href="formation.html">Formations</a>
+      <a href="edpg.html">EDPG</a>
+      <a href="sites.html">Nos sites</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div>
+      <h5>Contact</h5>
+      <span class="fl-t">1 avenue Gustave Charlery</span>
+      <span class="fl-t">Buro Club — 97300 Cayenne</span>
+      <span class="fl-t">05 94 27 40 40</span>
+      <a href="mailto:contact@scop-orygin.com">contact@scop-orygin.com</a>
+      <a href="https://www.scop-orygin.com" target="_blank">www.scop-orygin.com</a>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+      <h5 style="text-align:center;">Membre</h5>
+      <img src="assets/logo-ess.png" alt="Marque ESS" style="width:70px;height:auto;">
+      <p style="font-size:9px;color:rgba(255,255,255,.3);text-align:center;line-height:1.4;">Economie Sociale<br>&amp; Solidaire</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 SCOP ORYGIN — orygin kampus</span>
+    <div style="display:flex;gap:16px;">
+      <a href="legal.html" style="color:rgba(255,255,255,.35)">Mentions légales</a>
+      <a href="legal.html#cgu" style="color:rgba(255,255,255,.35)">CGU</a>
+      <a href="legal.html#rgpd" style="color:rgba(255,255,255,.35)">Politique RGPD</a>
+      <a href="legal.html#cookies" style="color:rgba(255,255,255,.35)">Cookies</a>
+    </div>
+  </div>
+</footer>
+<div class="stripe"><span style="background:var(--rouge)"></span><span style="background:var(--jaune)"></span><span style="background:var(--bleu)"></span><span style="background:var(--vert)"></span></div>
+
+<script>
+(function(){
+  var btn=document.getElementById('burger');
+  var navEl=document.querySelector('nav');
+  if(!btn||!navEl)return;
+  btn.addEventListener('click',function(){
+    btn.classList.toggle('open');
+    navEl.classList.toggle('open');
+    document.body.style.overflow=navEl.classList.contains('open')?'hidden':'';
+  });
+  navEl.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click',function(){
+      btn.classList.remove('open');
+      navEl.classList.remove('open');
+      document.body.style.overflow='';
+    });
+  });
+})();
+(function(){
+  var dd=document.getElementById('nav-dd');
+  var ddBtn=document.getElementById('nav-dd-btn');
+  if(!dd||!ddBtn)return;
+  ddBtn.addEventListener('click',function(e){
+    if(window.innerWidth<=760){
+      e.preventDefault();
+      dd.classList.toggle('mob-open');
+    }
+  });
+  document.addEventListener('click',function(e){if(!dd.contains(e.target))dd.classList.remove('mob-open');});
+})();
+</script>
+<script src="assets/cookies.js" defer></script>
+</body>
+</html>
